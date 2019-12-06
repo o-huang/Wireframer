@@ -2,7 +2,8 @@
     "todoLists": [
         {
             "key": 0,
-            "name": "Things I am Never Gonna Do",
+            "lastUpdate":"Thu Nov 14 2019 16:50:14 GMT-0500 (Eastern Standard Time)",
+            "name": "Wireframe 1",
             "owner": "Rick Astley",
             "items": [
                 {
@@ -30,7 +31,8 @@
         },
         {
             "key": 1,
-            "name": "House Repairs",
+            "lastUpdate":"Thu Nov 14 2019 16:50:14 GMT-0500 (Eastern Standard Time)",
+            "name": "Wireframe 2",
             "owner": "Bob Vila",
             "items": [
                 {
@@ -72,7 +74,8 @@
         },
         {
             "key": 2,
-            "name": "Courses to Take",
+            "lastUpdate":"Thu Nov 14 2019 16:50:14 GMT-0500 (Eastern Standard Time)",
+            "name": "Wireframe 3",
             "owner": "Joe Student",
             "items": [
                 {

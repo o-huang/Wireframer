@@ -33,7 +33,7 @@ class LoginScreen extends Component {
       firebase,
       credentials,
     };
-
+    
     props.login(authData);
   }
 
@@ -63,8 +63,7 @@ class LoginScreen extends Component {
           </form>
 
           <div className="col s8 banner">
-            @todo<br />
-            List Maker
+            Wireframer
           </div>
         </div>
       </div>

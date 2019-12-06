@@ -5,9 +5,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100%;
@@ -34,17 +32,185 @@ form button, form h5 {
   margin: 20px 0;
 }
 
-input[type=text]:not(.browser-default):focus:not([readonly]),
-input[type=email]:not(.browser-default):focus:not([readonly]),
-input[type=password]:not(.browser-default):focus:not([readonly]),
-textarea.materialize-textarea:focus:not([readonly]){
+input[type=text]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
   border-color: #ec407a;
   box-shadow: none;
 }
 
-input[type=text]:not(.browser-default):focus:not([readonly]) + label,
-textarea.materialize-textarea:focus:not([readonly]) + label,
-input[type=email]:not(.browser-default):focus:not([readonly]) + label,
-input[type=password]:not(.browser-default):focus:not([readonly]) + label{
+input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.materialize-textarea:focus:not([readonly])+label, input[type=email]:not(.browser-default):focus:not([readonly])+label, input[type=password]:not(.browser-default):focus:not([readonly])+label {
   color: #ec407a !important;
+}
+
+.row .col.m4 {
+  position: relative;
+  top: 40px;
+}
+
+.card-title {
+  font-size: 20px;
+}
+
+.container {
+  width: 90%;
+}
+
+.todoListArea {
+  color: green;
+  border-collapse: separate;
+  border-radius: 50px;
+}
+
+.todoListArea:hover {
+  color: yellowgreen;
+}
+
+.input-field {
+  width: 50%;
+  margin-left: auto;
+  left: auto;
+  right: auto;
+}
+
+.material-icons {
+  position: relative;
+  width: 3rem;
+  font-size: 2rem;
+  transition: color .2s;
+  top: .5rem;
+}
+
+.nameAndPassword {
+  position: relative;
+  font-size: 20px;
+  left: -8%;
+}
+
+.todoListLetter {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 35px;
+}
+
+#list_trash {
+  position: absolute;
+  left: 80%;
+}
+
+.list_item_card_description {
+  position: absolute;
+  top: -10%;
+  color: green;
+  font-weight: bold;
+}
+
+.list_item_card_assigned_to {
+  position: absolute;
+  top: 40%;
+  font-size: 20px;
+}
+
+.list_item_card_due_date {
+  position: absolute;
+  left: 35%;
+  top: 40%;
+  font-size: 20px;
+}
+
+.list_item_card_completed, .list_item_card_not_completed {
+  position: absolute;
+  top: 40%;
+  left: 60%;
+  font-size: 20px;
+}
+
+.list_item_card_completed {
+  color: green;
+}
+
+.list_item_card_not_completed {
+  color: red;
+}
+
+.list_item_header_card {
+  position: relative;
+  height: 50px;
+  grid-row-gap: 0px;
+  grid-column-gap: 50px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.list_item_task_header, .list_item_due_date_header, .list_item_status_header {
+  position: absolute;
+  top: 5%;
+  font-weight: bold;
+  font-size: 24pt;
+}
+
+.list_item_task_header {
+  left: 6%;
+}
+
+.list_item_due_date_header {
+  left: 35%;
+}
+
+.list_item_status_header {
+  left: 60%;
+}
+
+#addlist {
+  position: relative;
+  left: 45%;
+  width: 50px;
+  height: 50px;
+}
+
+#myListItems .collection {
+  border-radius: 50px;
+}
+
+.deleteButton {
+  font-size: 20px;
+}
+
+#modal-0 .modal-footer {
+  display: none;
+}
+
+#modal-0 .inside {
+  display: unset;
+}
+
+.deleteButton {
+  left: 80%;
+}
+
+.fixed-action-btn {
+  position: absolute;
+  top: 15%;
+}
+
+.floatButton {
+  top: 0%;
+}
+
+.modal {
+  width: 80%;
+}
+
+.itemContainer{
+  padding: 20px;
+  width: 80%;
+}
+
+.homeDelete{
+  position: absolute;;
+  color:yellowgreen;
+  left: 85%;
+}
+
+.homeDelete:hover {
+  color: red;
 }

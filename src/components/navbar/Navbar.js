@@ -8,6 +8,8 @@ import LoggedOutLinks from './LoggedOutLinks';
 
 class Navbar extends React.Component {
 
+
+
   render() {
     const { auth, profile } = this.props;
     const links = auth.uid ? <LoggedInLinks profile={profile} /> : <LoggedOutLinks />;
@@ -15,7 +17,7 @@ class Navbar extends React.Component {
     return (
       <nav className="nav-wrapper grey darken-3">
         <div className="container">
-          <Link to="/" className="brand-logo">@todo</Link>
+          <Link to="/" className="brand-logo">Wireframe!</Link>
           {links}
         </div>
       </nav>
