@@ -16,7 +16,7 @@ class DatabaseTester extends React.Component {
     }
     handleReset = () => {
         const fireStore = getFirestore();
-        var currentdate = new Date()
+        var currentdate = new Date() + ""
         var wireframeArray = []
         todoJson.todoLists.forEach(todoListJson => {
             var newArray ={name:todoListJson.name,list:todoListJson.items,lastUpdate: currentdate,key:todoListJson.key}

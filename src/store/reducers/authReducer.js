@@ -7,6 +7,8 @@ import * as actionCreators from '../actions/actionCreators'
 const initState = {};
 
 const authReducer = (state = initState, action) => {
+    
+  
   switch (action.type) {
     case actionCreators.LOGIN_ERROR:
       return {
@@ -21,8 +23,10 @@ const authReducer = (state = initState, action) => {
     case actionCreators.LOGOUT_SUCCESS:
       return state;
     case actionCreators.REGISTER_SUCCESS:
+      console.log(...state)
       return {
         ...state,
+        
         authError: null,
       };
     case actionCreators.REGISTER_ERROR:

@@ -9,108 +9,170 @@ import trashcan from '../../images/trashcan.png'
 import { Link } from 'react-router-dom';
 
 import { Modal, Button, Icon } from 'react-materialize'
+
+var theUser = ""
 class ListScreen extends Component {
-  // state = {
-  //   name: '',
-  //   owner: '',
-  // }
+  state = {
+    name: ''
 
-  // handleChange = (e) => {
-  //   const { target } = e;
+  }
 
-  //   this.setState(state => ({
-  //     ...state,
-  //     [target.id]: target.value,
-  //   }));
+  handleChange = (event) => {
+    const { target } = event;
+    this.setState(state => ({
+      ...state,
+      [target.id]: target.value,
+    }));
+    const theWireFrame = this.props.location.state.theWireFrame
 
-  //   const { theId } = this.props.location.state
-  //   const fireStore = getFirestore();
-  //   var hello = fireStore.collection('todoLists').doc(theId)
-  //   console.log(this.state.name)
-  //   if (target.id == "name") {
-  //     hello.update({
-  //       name: target.value
-  //     })
-  //   }
-  //   if (target.id == "owner") {
-  //     hello.update({
-  //       owner: target.value
-  //     })
-  //   }
-  // }
+    const users = this.props.users
+    for (var x in users) {
+      if (users[x].id == this.props.auth.uid) {
+        theUser = users[x]
+      }
+    }
 
-  // DeleteList = () => {
-  //   const { theId } = this.props.location.state
-  //   const fireStore = getFirestore();
-  //   fireStore.collection('todoLists').doc(theId).delete()
+    var copyList = ""
 
-  // }
+    copyList = theUser.wireFrameList.slice()
+
+    for (var x = 0; x < copyList.length; x++) {
+      if (copyList[x].key == theWireFrame.key) {
+        copyList[x].name = target.value
+      }
+    }
+
+    const fireStore = getFirestore();
+
+    fireStore.collection('users').doc(this.props.auth.uid).update({
+      wireFrameList: copyList
+    })
+  }
 
   render = () => {
 
-    
-    // const auth = this.props.auth;
-    // const todoList = this.props.todoList;
 
+    const auth = this.props.auth;
 
-    // if (!auth.uid) {
-    //   return <Redirect to="/" />;
-    // }
-    // if (!todoList) {
-    //   return <React.Fragment />
-    // }
+    if (!auth.uid) {
+      return <Redirect to="/" />;
+    }
+
+    const theWireFrame = this.props.location.state.theWireFrame
+
+    const users = this.props.users
+    for (var x in users) {
+      if (users[x].id == this.props.auth.uid) {
+        theUser = users[x]
+      }
+    }
+
+    var thisWireFrame = ""
+    if (theUser.wireFrameList != undefined) {
+      for (var x = 0; x < theUser.wireFrameList.length; x++) {
+        if (theUser.wireFrameList[x].key == theWireFrame.key) {
+          thisWireFrame = theUser.wireFrameList[x]
+
+        }
+      }
+    }
+
     return (
-      <h1>daw</h1>
-    //   <div className="container white">
-    //     <div className="row">
-    //       <h5 className="grey-text text-darken-3 todoListLetter">Todo List</h5>
-    //       <Modal
-    //         header='Delete List'
-    //         trigger={<img src={trashcan} id="list_trash" width="25" height="40" />}>
-    //         <h5>Are you sure you want to delete this list?</h5>
-    //         <h6>The list will not be retreivable!!</h6>
-    //         <div className="inside modal-footer">
-    //           <Link to="/" onClick={this.DeleteList} className="deleteButton modal-close waves-effect waves-green btn-flat">Yes</Link>
-    //           <a className="deleteButton modal-close waves-effect waves-green btn-flat">No</a>
-    //         </div>
-    //       </Modal>
 
-    //     </div>
-    //     <themodal />
-    //     <div className="row">
-    //       <div className="col s6">
-    //         <i className="material-icons prefix ">account_circle</i>
-    //         <label className="nameAndPassword">Name</label>
-    //         <input type="text" name="name" id="name" onChange={this.handleChange} value={todoList.name} />
-    //       </div>
-    //       <div className="col s6">
-    //         <i className="material-icons prefix">account_circle</i>
-    //         <label className="nameAndPassword">Owner</label>
-    //         <input className="active" type="text" name="owner" id="owner" onChange={this.handleChange} value={todoList.owner} />
-    //       </div>
-    //     </div>
-    //     <ItemsList todoList={todoList} />
-    //   </div>
+
+      <div className="container white">
+
+        <themodal />
+        <div className="row nameRow">
+          <div className="col s3">
+            <i className="material-icons prefix ">account_circle</i>
+            <label className="nameAndPassword">Wireframe Name:</label>
+          </div>
+          <div className="col s9">
+            <input type="text" name="name" id="name" onChange={this.handleChange} value={thisWireFrame.name} />
+          </div>
+        </div>
+
+
+        <div class="row">
+
+
+          <div class="col s2">
+            <div class="row">
+
+              <div class="col s12 boxfield z-depth-1">
+                <div class="row">
+                  <div class="col s3">
+                    <i class="material-icons">zoom_in</i>
+                  </div>
+                  <div class="col s3">
+                    <i class="material-icons">zoom_out</i>
+                  </div>
+                  <div class="col s3">
+                    <i class="material-icons">save</i>
+                  </div>
+                  <div class="col s3">
+                    <i class="material-icons">cancel</i>
+                  </div>
+
+                </div>
+
+              </div>
+              <div class="col s12 boxfield z-depth-1 leftContainer">
+
+                <div class="row">
+                  <div class="col s12">
+                    <a class="waves-effect waves-light light-green btn-small">Add Container</a>
+                  </div>
+                  <div class="col s12">
+                    <label>Promp for Input</label>
+                    <a class="waves-effect waves-light light-green btn-small">Add Label</a>
+                  </div>
+                  <div class="col s12">
+                    <button type="button">Submit</button>
+                    <a class="waves-effect waves-light light-green btn-small">Add Button</a>
+                  </div>
+                  <div class="col s12">
+                    
+                    <a class="waves-effect waves-light light-green btn-small">Add Textfield</a>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+          </div>
+          <div class="col s8 boxfield z-depth-1">6-columns (one-half)</div>
+          <div class="col s2  boxfield z-depth-1 rightbox rightContainer">
+            <h6>Properties: <input className="textboxy" id="itemdescriptiontext" type="text" name="descriptionValue" /></h6>
+            <h6>Font Size: <input className="textboxy" id="itemdescriptiontext" type="text" name="descriptionValue" /></h6>
+            <h6>Background: <input className="textboxy" id="itemdescriptiontext" type="text" name="descriptionValue" /></h6>
+            <h6>Border Color: <input className="textboxy" id="itemdescriptiontext" type="text" name="descriptionValue" /></h6>
+            <h6>Border Thickness: <input className="textboxy" id="itemdescriptiontext" type="text" name="descriptionValue" /></h6>
+            <h6>Border Radius: <input className="textboxy" id="itemdescriptiontext" type="text" name="descriptionValue" /></h6>
+
+          </div>
+        </div>
+        {/* <ItemsList todoList={todoList} /> */}
+      </div>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const { id } = ownProps.match.params;
-  const { todoLists } = state.firestore.data;
-  const todoList = todoLists ? todoLists[id] : null;
-  if (todoList) {
-    todoList.id = id;
-  }
+const mapStateToProps = (state) => {
   return {
-    todoList,
+    users: state.firestore.ordered.users,
     auth: state.firebase.auth,
   };
 };
 
+
 export default compose(
   connect(mapStateToProps),
   firestoreConnect([
-    { collection: 'todoLists' },
+    { collection: 'users' },
   ]),
 )(ListScreen);

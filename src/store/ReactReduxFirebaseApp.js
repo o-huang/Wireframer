@@ -45,6 +45,8 @@ class ReactReduxFirebaseApp extends React.Component {
     }
 
     render() {
+        
+        console.log(this.state.store)
         return (
             <Provider store={this.state.store}>
                 <ReactReduxFirebaseProvider {...this.state.rrfProps}>

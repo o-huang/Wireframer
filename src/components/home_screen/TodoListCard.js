@@ -8,9 +8,11 @@ class TodoListCard extends React.Component {
 
     deleteWireFrame=(event)=>{
         event.preventDefault()
+        event.stopPropagation()
+
         const users = this.props.users
         for (var x in users){
-            if (users[x].id = this.props.auth.uid){
+            if (users[x].id == this.props.auth.uid){
                 theUser = users[x]
             }
         }
@@ -25,14 +27,10 @@ class TodoListCard extends React.Component {
         fireStore.collection('users').doc(this.props.auth.uid).update({
             wireFrameList: theList
         })
-        
-
-       
     }
 
     render() {
         const { wireframe } = this.props;
-
         return (
             <div className="collection z-depth-3 todoListArea" id ="change">
                 <div className="collection-item  grey lighten-5">
