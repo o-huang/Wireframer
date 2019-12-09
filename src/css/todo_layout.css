@@ -228,6 +228,33 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.mat
 }
 
 .rightContainer{
-  height: 500px;
+  height: 510px;
 }
 
+.propContainer{
+  border:1px solid black;  
+  border-radius: 3px;
+  height: 60px;
+  width: 120px;
+
+}
+
+.leftRow{
+  padding-top: 1000px;
+}
+
+.centerIt{
+  display: block;
+  text-align: center;
+  align-items: center;
+}
+
+#boxPadding{
+  padding-top: 25px;
+}
+
+#flex{
+  display: flex;
+  justify-content: center;
+  padding-bottom: 5px;
+}

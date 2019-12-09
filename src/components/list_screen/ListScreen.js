@@ -5,7 +5,6 @@ import { compose } from 'redux';
 import ItemsList from './ItemsList.js'
 import { firestoreConnect } from 'react-redux-firebase';
 import { getFirestore } from 'redux-firestore';
-import trashcan from '../../images/trashcan.png'
 import { Link } from 'react-router-dom';
 
 import { Modal, Button, Icon } from 'react-materialize'
@@ -77,12 +76,16 @@ class ListScreen extends Component {
       }
     }
 
+    var wireFrameItems = thisWireFrame.list
+    console.log("hi")
+    console.log(wireFrameItems)
     return (
 
 
-      <div className="container white">
 
-        <themodal />
+      <div className="container white">
+        {/* Row for the name */}
+
         <div className="row nameRow">
           <div className="col s3">
             <i className="material-icons prefix ">account_circle</i>
@@ -93,70 +96,86 @@ class ListScreen extends Component {
           </div>
         </div>
 
+        {/* Row for item container divided into 3 */}
+        <div className="row">
 
-        <div class="row">
+          <div className="col s2">
 
+            {/* Left Side*/}
+            <div className="row">
 
-          <div class="col s2">
-            <div class="row">
-
-              <div class="col s12 boxfield z-depth-1">
-                <div class="row">
-                  <div class="col s3">
-                    <i class="material-icons">zoom_in</i>
+              {/* Icon Section*/}
+              <div className="col s12 boxfield z-depth-1">
+                <div className="row">
+                  <div className="col s3">
+                    <i className="material-icons">zoom_in</i>
                   </div>
-                  <div class="col s3">
-                    <i class="material-icons">zoom_out</i>
+                  <div className="col s3">
+                    <i className="material-icons">zoom_out</i>
                   </div>
-                  <div class="col s3">
-                    <i class="material-icons">save</i>
+                  <div className="col s3">
+                    <i className="material-icons">save</i>
                   </div>
-                  <div class="col s3">
-                    <i class="material-icons">cancel</i>
+                  <div className="col s3">
+                    <Link to="/"><i className="material-icons">cancel</i></Link>
+                    {/* <i className="material-icons">cancel</i> */}
                   </div>
-
                 </div>
-
               </div>
-              <div class="col s12 boxfield z-depth-1 leftContainer">
+              {/* Icon Section*/}
 
-                <div class="row">
-                  <div class="col s12">
-                    <a class="waves-effect waves-light light-green btn-small">Add Container</a>
+              {/* Item Section*/}
+              <div className="col s12 boxfield z-depth-1 leftContainer">
+                <div className="row">
+                  <div className="col s12" id="boxPadding">
+                    <div id="flex">
+                      <div className="propContainer"></div>
+                    </div>
+                    <a className="waves-effect waves-light light-green btn-small" id="flex">Add Container</a>
                   </div>
-                  <div class="col s12">
-                    <label>Promp for Input</label>
-                    <a class="waves-effect waves-light light-green btn-small">Add Label</a>
+                  <div className="col s12" id="boxPadding">
+                    <div id="flex">
+                      <label >Promp for Input:</label>
+                    </div>
+                    <a className="waves-effect waves-light light-green btn-small" id="flex">Add Label</a>
                   </div>
-                  <div class="col s12">
-                    <button type="button">Submit</button>
-                    <a class="waves-effect waves-light light-green btn-small">Add Button</a>
+                  <div className="col s12" id="boxPadding">
+                    <div id="flex">
+                      <button type="button" >Submit</button>
+                    </div>
+                    <a className="waves-effect waves-light light-green btn-small" id="flex">Add Button</a>
                   </div>
-                  <div class="col s12">
-                    
-                    <a class="waves-effect waves-light light-green btn-small">Add Textfield</a>
+                  <div className="col s12" id="boxPadding">
+                    <div id="flex">
+                      <input type="text" placeholder="input" />
+                    </div>
+                    <a className="waves-effect waves-light light-green btn-small" id="flex">Add Textfield</a>
                   </div>
-
                 </div>
-
               </div>
 
             </div>
-
-
           </div>
-          <div class="col s8 boxfield z-depth-1">6-columns (one-half)</div>
-          <div class="col s2  boxfield z-depth-1 rightbox rightContainer">
-            <h6>Properties: <input className="textboxy" id="itemdescriptiontext" type="text" name="descriptionValue" /></h6>
-            <h6>Font Size: <input className="textboxy" id="itemdescriptiontext" type="text" name="descriptionValue" /></h6>
-            <h6>Background: <input className="textboxy" id="itemdescriptiontext" type="text" name="descriptionValue" /></h6>
-            <h6>Border Color: <input className="textboxy" id="itemdescriptiontext" type="text" name="descriptionValue" /></h6>
-            <h6>Border Thickness: <input className="textboxy" id="itemdescriptiontext" type="text" name="descriptionValue" /></h6>
-            <h6>Border Radius: <input className="textboxy" id="itemdescriptiontext" type="text" name="descriptionValue" /></h6>
 
+
+          <div className="col s8 boxfield z-depth-1" id="theItemContainer">
+            {wireFrameItems && wireFrameItems.map(wireframe => (
+              <ItemsList wireFrameItem={wireframe} />
+            ))}
           </div>
+
+
+          <div className="col s2  boxfield z-depth-1 rightbox rightContainer">
+            <h6>Properties: <input className="textboxy" type="text" /></h6>
+            <h6>Font Size: <input className="textboxy" type="text" /></h6>
+            <h6>Background: <input className="textboxy" type="text" /></h6>
+            <h6>Border Color: <input className="textboxy" type="text" /></h6>
+            <h6>Border Thickness: <input className="textboxy" type="text" /></h6>
+            <h6>Border Radius: <input className="textboxy" type="text" /></h6>
+          </div>
+
+
         </div>
-        {/* <ItemsList todoList={todoList} /> */}
       </div>
     );
   }
