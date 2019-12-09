@@ -9,31 +9,29 @@
                     "key": 0,
                     "type": "label",
                     "text": "login",
-                    "fontsize": "12",
+                    "fontsize": "25px",
                     "background": "red",
                     "bordercolor": "green",
-                    "borderthickness": "1",
-                    "borderradius": "1"
+                    "borderthickness": "1px",
+                    "borderradius": "1px"
                 },
                 {
                     "key": 1,
                     "type": "button",
                     "text": "submit",
-                    "fontsize": "14",
+                    "fontsize": "40px",
                     "background": "white",
                     "bordercolor": "black",
-                    "borderthickness": "2",
-                    "borderradius": "2"
+                    "borderthickness": "2px",
+                    "borderradius": "2px"
                 },
                 {
                     "key": 1,
                     "type": "container",
-                    "text": "submit",
-                    "fontsize": "14",
-                    "background": "white",
-                    "bordercolor": "black",
-                    "borderthickness": "2",
-                    "borderradius": "2"
+                    "background": "green",
+                    "bordercolor": "red",
+                    "borderthickness": "10px",
+                    "borderradius": "10px"
                 }
             ]
         },
@@ -46,31 +44,31 @@
                     "key": 0,
                     "type": "button",
                     "text": "button1",
-                    "fontsize": "12",
+                    "fontsize": "10px",
                     "background": "white",
                     "bordercolor": "black",
-                    "borderthickness": "1",
-                    "borderradius": "1"
+                    "borderthickness": "1px",
+                    "borderradius": "1px"
                 },
                 {
                     "key": 1,
                     "type": "button",
                     "text": "button2",
-                    "fontsize": "12",
+                    "fontsize": "30px",
                     "background": "white",
                     "bordercolor": "black",
-                    "borderthickness": "2",
-                    "borderradius": "2"
+                    "borderthickness": "2px",
+                    "borderradius": "2px"
                 },
                 {
                     "key": 2,
                     "type": "button",
                     "text": "button3",
-                    "fontsize": "12",
+                    "fontsize": "40px",
                     "background": "white",
                     "bordercolor": "black",
-                    "borderthickness": "3",
-                    "borderradius": "3"
+                    "borderthickness": "3px",
+                    "borderradius": "3px"
                 }
             ]
         },
@@ -83,41 +81,41 @@
                     "key": 0,
                     "type": "label",
                     "text": "MyLabel",
-                    "fontsize": "12",
+                    "fontsize": "12px",
                     "background": "red",
                     "bordercolor": "green",
-                    "borderthickness": "1",
-                    "borderradius": "1"
+                    "borderthickness": "1px",
+                    "borderradius": "1px"
                 },
                 {
                     "key": 1,
                     "type": "textfield",
                     "text": "Hello",
-                    "fontsize": "10",
+                    "fontsize": "10px",
                     "background": "white",
                     "bordercolor": "black",
-                    "borderthickness": "2",
-                    "borderradius": "1"
+                    "borderthickness": "2px",
+                    "borderradius": "1px"
                 },
                 {
                     "key": 2,
                     "type": "textfield",
                     "text": "World",
-                    "fontsize": "10",
+                    "fontsize": "10px",
                     "background": "white",
                     "bordercolor": "black",
-                    "borderthickness": "1",
-                    "borderradius": "2"
+                    "borderthickness": "1px",
+                    "borderradius": "2px"
                 },
                 {
                     "key": 3,
                     "type": "button",
                     "text": "Delete",
-                    "fontsize": "12",
+                    "fontsize": "12px",
                     "background": "green",
                     "bordercolor": "red",
-                    "borderthickness": "4",
-                    "borderradius": "3"
+                    "borderthickness": "4px",
+                    "borderradius": "3px"
                 }
             ]
         }

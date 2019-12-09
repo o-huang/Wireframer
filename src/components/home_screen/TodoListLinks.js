@@ -44,7 +44,7 @@ class TodoListLinks extends React.Component {
             })
         }
 
-
+        console.log(theUser)
 
         return (
             <div className="todo-lists section">
@@ -52,7 +52,8 @@ class TodoListLinks extends React.Component {
                     <Link to={{
                         pathname: '/wireframe/' + wireframe.key,
                         state: {
-                            theWireFrame: wireframe
+                            theWireFrame: wireframe,
+                            theUser: theUser
                         }
                     }}
                         onClick={this.updateTime.bind(this, wireframe, copyList)}

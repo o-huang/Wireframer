@@ -8,11 +8,13 @@ import { getFirestore } from 'redux-firestore';
 import { Link } from 'react-router-dom';
 
 import { Modal, Button, Icon } from 'react-materialize'
+import Draggable from 'react-draggable';
 
 var theUser = ""
 class ListScreen extends Component {
   state = {
-    name: ''
+    name: '',
+
 
   }
 
@@ -75,10 +77,11 @@ class ListScreen extends Component {
         }
       }
     }
-
+    console.log("!!!!!1")
+    console.log(thisWireFrame)
+    console.log(theWireFrame)
+    console.log("!!!!!")
     var wireFrameItems = thisWireFrame.list
-    console.log("hi")
-    console.log(wireFrameItems)
     return (
 
 
@@ -118,7 +121,6 @@ class ListScreen extends Component {
                   </div>
                   <div className="col s3">
                     <Link to="/"><i className="material-icons">cancel</i></Link>
-                    {/* <i className="material-icons">cancel</i> */}
                   </div>
                 </div>
               </div>
@@ -147,7 +149,7 @@ class ListScreen extends Component {
                   </div>
                   <div className="col s12" id="boxPadding">
                     <div id="flex">
-                      <input type="text" placeholder="input" />
+                      <input type="text" placeholder="input"  />
                     </div>
                     <a className="waves-effect waves-light light-green btn-small" id="flex">Add Textfield</a>
                   </div>
@@ -158,10 +160,20 @@ class ListScreen extends Component {
           </div>
 
 
-          <div className="col s8 boxfield z-depth-1" id="theItemContainer">
-            {wireFrameItems && wireFrameItems.map(wireframe => (
-              <ItemsList wireFrameItem={wireframe} />
-            ))}
+          <div className="col s8" >
+            <div className="box" style={{ height: '550px', width: '832px', position: 'relative', overflow: 'auto', padding: '0' }}>
+              <div style={{ height: '550px', width: '832px', padding: '10px' }}>
+
+
+                {wireFrameItems && wireFrameItems.map(wireframe => (
+               
+                      <ItemsList wireFrameItem={wireframe} />
+                 
+                ))}
+              </div>
+            </div>
+
+
           </div>
 
 

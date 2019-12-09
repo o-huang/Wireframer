@@ -201,10 +201,7 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.mat
   width: 80%;
 }
 
-.itemContainer{
-  padding: 20px;
-  width: 80%;
-}
+
 
 .homeDelete{
   position: absolute;;
@@ -233,7 +230,6 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.mat
 
 .propContainer{
   border:1px solid black;  
-  border-radius: 3px;
   height: 60px;
   width: 120px;
 
@@ -258,3 +254,19 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.mat
   justify-content: center;
   padding-bottom: 5px;
 }
+
+#test{
+  touch-action: none;
+  transform: translate(-18px, 7px);
+}
+
+.box {
+  background: #fff;
+  border: 1px solid #999;
+  border-radius: 3x;
+  width: 810px;
+  margin: 0px;
+  padding: 0px;
+  float: left;
+}
+

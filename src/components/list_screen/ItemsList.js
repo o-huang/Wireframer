@@ -6,33 +6,90 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { Modal, Button, Icon, Checkbox } from 'react-materialize'
 import { getFirestore } from 'redux-firestore';
 import { Link } from 'react-router-dom';
+import Draggable from 'react-draggable';
 
 class ItemsList extends React.Component {
 
 
     render() {
-        const {wireFrameItem } = this.props;
-        console.log(wireFrameItem)
-        var body = document.getElementById("theItemContainer")
-        if(wireFrameItem.type == "button"){
-            var btn = document.createElement("BUTTON");
-            btn.innerHTML = "CLICK ME";
-            body.appendChild(btn);
+        const { wireFrameItem } = this.props;
+        
+
+        const divStyle = {
+            fontSize: wireFrameItem.fontsize,
+            backgroundColor: wireFrameItem.background,
+            borderColor: wireFrameItem.bordercolor,
+            borderWidth: wireFrameItem.borderthickness,
+            borderRadius: wireFrameItem.borderradius,
         }
-        if(wireFrameItem.type == "label"){
-            var label = document.createElement("LABEL")
-            label.innerHTML = "I'm a label"
-            body.appendChild(label)
+
+        const labelStyle = {
+            border: "1px solid",
+            fontSize: wireFrameItem.fontsize,
+            backgroundColor: wireFrameItem.background,
+            borderColor: wireFrameItem.bordercolor,
+            borderWidth: wireFrameItem.borderthickness,
+            borderRadius: wireFrameItem.borderradius,
         }
-        if(wireFrameItem.type == "container"){
-            var container = document.createElement("DIV")
-            container.setAttribute("class","propContainer")
-            body.appendChild(container)
+
+        const containerStyle = {
+            border: "1px solid",
+            height: "60px",
+            width: "120px",
+            backgroundColor: wireFrameItem.background,
+            borderColor: wireFrameItem.bordercolor,
+            borderWidth: wireFrameItem.borderthickness,
+            borderRadius: wireFrameItem.borderradius,
         }
+
+       
+      
+        let thing = ""
+        if (wireFrameItem.type == "button") {
+            thing = (
+
+                <button style={divStyle} id ="newButton">{wireFrameItem.text}</button>
+                
+            )
+        }
+        
+        
+        else if (wireFrameItem.type == "label") {
+            thing = (
+
+                <label style={labelStyle} >{wireFrameItem.text}</label>
+
+            )
+        } else if (wireFrameItem.type == "container") {
+            thing = (
+                <div>
+                    <div style={containerStyle}></div>
+                </div>
+
+            )
+
+        } else {
+
+            thing = (
+                <div>
+                     <input type="text" placeholder="input"  />
+                </div>
+            )
+
+        }
+      
+
+
         return (
-            <div>
-                <h1>hi</h1>
-            </div>
+            <Draggable>
+
+                <div >
+                    {thing}
+                </div>
+
+            </Draggable>
+
+
         );
     }
 }
