@@ -34,17 +34,24 @@ class TodoListLinks extends React.Component {
         }
 
         var copyList = ""
+        var copyUser =""
+        var theWireframe = ""
         if (theUser.wireFrameList != undefined) {
+            
             copyList = theUser.wireFrameList.slice()
-            orderedList = theUser.wireFrameList.slice().sort(function (a, b) {
+            copyUser = Object.assign({},theUser)
+           
 
+
+            orderedList = theUser.wireFrameList.slice().sort(function (a, b) {
                 var c = new Date(a.lastUpdate);
                 var d = new Date(b.lastUpdate);
                 return d - c;
             })
+
         }
 
-        console.log(theUser)
+        
 
         return (
             <div className="todo-lists section">
@@ -53,7 +60,8 @@ class TodoListLinks extends React.Component {
                         pathname: '/wireframe/' + wireframe.key,
                         state: {
                             theWireFrame: wireframe,
-                            theUser: theUser
+                            theUser: copyUser
+                        
                         }
                     }}
                         onClick={this.updateTime.bind(this, wireframe, copyList)}

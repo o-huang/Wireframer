@@ -270,3 +270,12 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.mat
   float: left;
 }
 
+.changeWidth{
+  width: 100px;
+}
+
+#inputTextBox{
+  width: 120px;
+}
+
+

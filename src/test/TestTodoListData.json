@@ -26,11 +26,21 @@
                     "borderradius": "2px"
                 },
                 {
-                    "key": 1,
+                    "key": 2,
                     "type": "container",
                     "background": "green",
                     "bordercolor": "red",
                     "borderthickness": "10px",
+                    "borderradius": "10px"
+                },
+                {
+                    "key": 3,
+                    "type": "textfield",
+                    "text": "World Bye",
+                    "fontsize": "10px",
+                    "background": "yellow",
+                    "bordercolor": "red",
+                    "borderthickness": "15px",
                     "borderradius": "10px"
                 }
             ]

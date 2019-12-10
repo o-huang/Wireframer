@@ -11,11 +11,12 @@ import { Modal, Button, Icon } from 'react-materialize'
 import Draggable from 'react-draggable';
 
 var theUser = ""
+var zoomDefaultSize = 1
 class ListScreen extends Component {
   state = {
     name: '',
-
-
+    theUser: this.props.location.state.theUser,
+    theWireFrame: this.props.location.state.theWireFrame
   }
 
   handleChange = (event) => {
@@ -24,64 +25,153 @@ class ListScreen extends Component {
       ...state,
       [target.id]: target.value,
     }));
-    const theWireFrame = this.props.location.state.theWireFrame
-
-    const users = this.props.users
-    for (var x in users) {
-      if (users[x].id == this.props.auth.uid) {
-        theUser = users[x]
-      }
-    }
 
     var copyList = ""
-
-    copyList = theUser.wireFrameList.slice()
+    copyList = this.state.theUser.wireFrameList
 
     for (var x = 0; x < copyList.length; x++) {
-      if (copyList[x].key == theWireFrame.key) {
+      if (copyList[x].key == this.state.theWireFrame.key) {
         copyList[x].name = target.value
       }
     }
 
     const fireStore = getFirestore();
-
     fireStore.collection('users').doc(this.props.auth.uid).update({
       wireFrameList: copyList
     })
   }
 
+  findBiggestKey = (copy) => {
+    var biggestKey = -1
+    for (var x = 0; x < copy.list.length; x++) {
+      if (copy.list[x].key > biggestKey) {
+        biggestKey = copy.list[x].key
+      }
+    }
+    biggestKey += 1
+    return biggestKey
+  }
+
+  addContainer = () => {
+    var copy = Object.assign({}, this.state.theWireFrame)
+    var newContainer = {
+      key: this.findBiggestKey(copy),
+      type: "container",
+      background: "white",
+      bordercolor: "black",
+      borderthickness: "1px",
+      borderradius: "1px"
+    }
+    copy.list.push(newContainer)
+    this.setState({ theWireFrame: copy })
+  }
+
+  addLabel = () => {
+    var copy = Object.assign({}, this.state.theWireFrame)
+    var newLabel = {
+      key: this.findBiggestKey(copy),
+      type: "label",
+      text: "Prompt for Input",
+      fontsize: "20px",
+      background: "white",
+      bordercolor: "black",
+      borderthickness: "1px",
+      borderradius: "1px"
+    }
+    copy.list.push(newLabel)
+    this.setState({ theWireFrame: copy })
+  }
+
+  addButton = () => {
+    var copy = Object.assign({}, this.state.theWireFrame)
+    var newButton = {
+      key: this.findBiggestKey(copy),
+      type: "button",
+      text: "Submit",
+      fontsize: "20px",
+      background: "white",
+      bordercolor: "black",
+      borderthickness: "1px",
+      borderradius: "1px"
+    }
+    copy.list.push(newButton)
+    this.setState({ theWireFrame: copy })
+
+  }
+
+  addTextfield = () => {
+    var copy = Object.assign({}, this.state.theWireFrame)
+
+    var newTextfield = {
+      key: this.findBiggestKey(copy),
+      type: "textfield",
+      text: "",
+      fontsize: "20px",
+      background: "white",
+      bordercolor: "black",
+      borderthickness: "1px",
+      borderradius: "1px",
+    }
+    copy.list.push(newTextfield)
+    this.setState({ theWireFrame: copy })
+  }
+
+  zoomIn = () => {
+    var cols = document.getElementsByClassName("zoom")
+
+    for (var i = 0; i < cols.length; i++) {
+
+      if (cols[i].style.transform == "") {
+        cols[i].style.transform = "scale(1.2)"
+      }
+      else {
+        var firstPar = cols[i].style.transform.indexOf("(")
+        var secondPar = cols[i].style.transform.indexOf(")")
+        firstPar += 1
+        var theNumber = cols[i].style.transform.substring(firstPar, secondPar)
+        var theNumber = parseFloat(theNumber)
+        if (theNumber + .2 < 10) {
+          theNumber = theNumber + .2
+          var theString = "scale("+theNumber+")"
+          cols[i].style.transform= theString
+        }
+      }
+    }
+  }
+
+  zoomOut = () => {
+    var cols = document.getElementsByClassName("zoom")
+
+    for (var i = 0; i < cols.length; i++) {
+
+      if (cols[i].style.transform == "") {
+        cols[i].style.transform = "scale(.8)"
+      }
+      else {
+        var firstPar = cols[i].style.transform.indexOf("(")
+        var secondPar = cols[i].style.transform.indexOf(")")
+        firstPar += 1
+        var theNumber = cols[i].style.transform.substring(firstPar, secondPar)
+        var theNumber = parseFloat(theNumber)
+        if (theNumber - .2 >.2) {
+          theNumber = theNumber - .2
+          var theString = "scale("+theNumber+")"
+          cols[i].style.transform= theString
+        }
+      }
+    }
+  }
+
+
   render = () => {
-
-
     const auth = this.props.auth;
 
     if (!auth.uid) {
       return <Redirect to="/" />;
     }
 
-    const theWireFrame = this.props.location.state.theWireFrame
+    var wireFrameItems = this.state.theWireFrame.list
 
-    const users = this.props.users
-    for (var x in users) {
-      if (users[x].id == this.props.auth.uid) {
-        theUser = users[x]
-      }
-    }
-
-    var thisWireFrame = ""
-    if (theUser.wireFrameList != undefined) {
-      for (var x = 0; x < theUser.wireFrameList.length; x++) {
-        if (theUser.wireFrameList[x].key == theWireFrame.key) {
-          thisWireFrame = theUser.wireFrameList[x]
-
-        }
-      }
-    }
-    console.log("!!!!!1")
-    console.log(thisWireFrame)
-    console.log(theWireFrame)
-    console.log("!!!!!")
-    var wireFrameItems = thisWireFrame.list
     return (
 
 
@@ -95,7 +185,7 @@ class ListScreen extends Component {
             <label className="nameAndPassword">Wireframe Name:</label>
           </div>
           <div className="col s9">
-            <input type="text" name="name" id="name" onChange={this.handleChange} value={thisWireFrame.name} />
+            <input type="text" name="name" id="name" onChange={this.handleChange} value={this.state.theWireFrame.name} />
           </div>
         </div>
 
@@ -111,10 +201,10 @@ class ListScreen extends Component {
               <div className="col s12 boxfield z-depth-1">
                 <div className="row">
                   <div className="col s3">
-                    <i className="material-icons">zoom_in</i>
+                    <i className="material-icons" onClick={this.zoomIn}>zoom_in</i>
                   </div>
                   <div className="col s3">
-                    <i className="material-icons">zoom_out</i>
+                    <i className="material-icons" onClick={this.zoomOut}>zoom_out</i>
                   </div>
                   <div className="col s3">
                     <i className="material-icons">save</i>
@@ -133,25 +223,25 @@ class ListScreen extends Component {
                     <div id="flex">
                       <div className="propContainer"></div>
                     </div>
-                    <a className="waves-effect waves-light light-green btn-small" id="flex">Add Container</a>
+                    <a className="waves-effect waves-light light-green btn-small" id="flex" onClick={this.addContainer}>Add Container</a>
                   </div>
                   <div className="col s12" id="boxPadding">
                     <div id="flex">
                       <label >Promp for Input:</label>
                     </div>
-                    <a className="waves-effect waves-light light-green btn-small" id="flex">Add Label</a>
+                    <a className="waves-effect waves-light light-green btn-small" id="flex" onClick={this.addLabel}>Add Label</a>
                   </div>
                   <div className="col s12" id="boxPadding">
                     <div id="flex">
                       <button type="button" >Submit</button>
                     </div>
-                    <a className="waves-effect waves-light light-green btn-small" id="flex">Add Button</a>
+                    <a className="waves-effect waves-light light-green btn-small" id="flex" onClick={this.addButton}>Add Button</a>
                   </div>
                   <div className="col s12" id="boxPadding">
                     <div id="flex">
-                      <input type="text" placeholder="input"  />
+                      <input type="text" className="browser-default" placeholder="input" id="inputTextBox" />
                     </div>
-                    <a className="waves-effect waves-light light-green btn-small" id="flex">Add Textfield</a>
+                    <a className="waves-effect waves-light light-green btn-small" id="flex" onClick={this.addTextfield}>Add Textfield</a>
                   </div>
                 </div>
               </div>
@@ -163,17 +253,11 @@ class ListScreen extends Component {
           <div className="col s8" >
             <div className="box" style={{ height: '550px', width: '832px', position: 'relative', overflow: 'auto', padding: '0' }}>
               <div style={{ height: '550px', width: '832px', padding: '10px' }}>
-
-
                 {wireFrameItems && wireFrameItems.map(wireframe => (
-               
-                      <ItemsList wireFrameItem={wireframe} />
-                 
+                  <ItemsList wireFrameItem={wireframe} />
                 ))}
               </div>
             </div>
-
-
           </div>
 
 
