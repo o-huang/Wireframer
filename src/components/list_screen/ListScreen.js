@@ -101,7 +101,6 @@ class ListScreen extends Component {
 
   addTextfield = () => {
     var copy = Object.assign({}, this.state.theWireFrame)
-
     var newTextfield = {
       key: this.findBiggestKey(copy),
       type: "textfield",
@@ -118,9 +117,7 @@ class ListScreen extends Component {
 
   zoomIn = () => {
     var cols = document.getElementsByClassName("zoom")
-
     for (var i = 0; i < cols.length; i++) {
-
       if (cols[i].style.transform == "") {
         cols[i].style.transform = "scale(1.2)"
       }
@@ -141,9 +138,7 @@ class ListScreen extends Component {
 
   zoomOut = () => {
     var cols = document.getElementsByClassName("zoom")
-
     for (var i = 0; i < cols.length; i++) {
-
       if (cols[i].style.transform == "") {
         cols[i].style.transform = "scale(.8)"
       }
@@ -252,7 +247,7 @@ class ListScreen extends Component {
 
           <div className="col s8" >
             <div className="box" style={{ height: '550px', width: '832px', position: 'relative', overflow: 'auto', padding: '0' }}>
-              <div style={{ height: '550px', width: '832px', padding: '10px' }}>
+              <div className="boundThis" style={{ height: '2000px', width: '2000px', padding: '10px' }}>
                 {wireFrameItems && wireFrameItems.map(wireframe => (
                   <ItemsList wireFrameItem={wireframe} />
                 ))}

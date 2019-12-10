@@ -271,11 +271,11 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.mat
 }
 
 .changeWidth{
-  width: 100px;
+  width: max-content;
 }
 
 #inputTextBox{
-  width: 120px;
+  width: 150px;
 }
 
 

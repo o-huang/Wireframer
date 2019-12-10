@@ -61,8 +61,8 @@ class ItemsList extends React.Component {
         }
         else if (wireFrameItem.type == "label") {
             thing = (
-                <div className="zoom">
-                    <label style={labelStyle}>{wireFrameItem.text}</label>
+                <div className="zoom changeWidth">
+                    <label style={labelStyle} >{wireFrameItem.text}</label>
                 </div>
                 
             )
@@ -77,7 +77,7 @@ class ItemsList extends React.Component {
         }
 
         return (
-            <Draggable>
+            <Draggable bounds=".boundThis">
                 <div className="changeWidth" >
                     {thing}
                 </div>
