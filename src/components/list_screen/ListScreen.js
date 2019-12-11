@@ -21,6 +21,7 @@ class ListScreen extends Component {
     //-------------------------------------------------------------
     properties: "",
     fontsize: "",
+    fontcolor: "",
     background: "",
     bordercolor: "",
     borderthickness: "",
@@ -67,8 +68,8 @@ class ListScreen extends Component {
     var newContainer = {
       key: this.findBiggestKey(copy),
       type: "container",
-      background: "white",
-      bordercolor: "black",
+      background: "#FFFFFF",
+      bordercolor: "#000000",
       borderthickness: "1px",
       borderradius: "1px"
     }
@@ -83,8 +84,9 @@ class ListScreen extends Component {
       type: "label",
       text: "Prompt for Input",
       fontsize: "20px",
-      background: "white",
-      bordercolor: "black",
+      fontcolor: "#000000",
+      background: "#FFFFFF",
+      bordercolor: "#000000",
       borderthickness: "1px",
       borderradius: "1px"
     }
@@ -99,8 +101,9 @@ class ListScreen extends Component {
       type: "button",
       text: "Submit",
       fontsize: "20px",
-      background: "white",
-      bordercolor: "black",
+      fontcolor: "#000000",
+      background: "#FFFFFF",
+      bordercolor: "#000000",
       borderthickness: "1px",
       borderradius: "1px"
     }
@@ -116,8 +119,9 @@ class ListScreen extends Component {
       type: "textfield",
       text: "",
       fontsize: "20px",
-      background: "white",
-      bordercolor: "black",
+      fontcolor: "#000000",
+      background: "#FFFFFF",
+      bordercolor: "#000000",
       borderthickness: "1px",
       borderradius: "1px",
     }
@@ -187,32 +191,42 @@ class ListScreen extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
-    console.log(document.getElementById("theProperties").value)
-    console.log(this.state.properties)
-    // this.state.selectedItem
+
+    this.state.selectedItem.text = document.getElementById("theProperties").value
+    this.state.selectedItem.fontsize = document.getElementById("theFontsize").value + "px"
+    this.state.selectedItem.fontcolor = document.getElementById("theFontcolor").value
+    this.state.selectedItem.background = document.getElementById("theBackground").value
+    this.state.selectedItem.bordercolor = document.getElementById("theBordercolor").value
+    this.state.selectedItem.borderthickness = document.getElementById("theBorderthickness").value + "px"
+    this.state.selectedItem.borderradius = document.getElementById("theBorderradius").value + "px"
 
   }
 
   setSelectedItem = (event, currentItemSelected) => {
-  
+    console.log(currentItemSelected)
     event.stopPropagation()
     this.setState({ selectedItem: currentItemSelected })
 
-    this.setState({ properties: currentItemSelected.text })
-    this.setState({ fontsize: currentItemSelected.fontsize })
+    if (currentItemSelected.type == "container") {
+      this.setState({ properties: "" })
+      this.setState({ fontsize: "" })
+      this.setState({ fontcolor: "" })
+    } else {
+      this.setState({ properties: currentItemSelected.text })
+      this.setState({ fontsize: parseInt(currentItemSelected.fontsize) })
+      this.setState({ fontcolor: currentItemSelected.fontcolor })
+    }
+    
     this.setState({ background: currentItemSelected.background })
     this.setState({ bordercolor: currentItemSelected.bordercolor })
-    this.setState({ borderthickness: currentItemSelected.borderthickness })
-    this.setState({ borderradius: currentItemSelected.borderradius })
-
-
-
+    this.setState({ borderthickness: parseInt(currentItemSelected.borderthickness )})
+    this.setState({ borderradius: parseInt(currentItemSelected.borderradius) })
   }
 
   setItemSelectedEmpty = () => {
-
     this.setState({ properties: "" })
     this.setState({ fontsize: "" })
+    this.setState({ fontcolor: "" })
     this.setState({ background: "" })
     this.setState({ bordercolor: "" })
     this.setState({ borderthickness: "" })
@@ -228,15 +242,13 @@ class ListScreen extends Component {
     }
 
     var wireFrameItems = this.state.theWireFrame.list
-
     const properties = this.state.properties
     const fontsize = this.state.fontsize
     const background = this.state.background
     const bordercolor = this.state.bordercolor
     const borderthickness = this.state.borderthickness
     const borderradius = this.state.borderradius
-
-
+    const fontcolor = this.state.fontcolor
     return (
 
 
@@ -329,11 +341,12 @@ class ListScreen extends Component {
 
           <div className="col s2  boxfield z-depth-1 rightbox rightContainer">
             <h6>Properties: <input className="textboxy" type="text" id="theProperties" name="properties" value={properties} onChange={this.changeItem} /></h6>
-            <h6>Font Size: <input className="textboxy" type="text" name="fontsize" value={fontsize} onChange={this.changeItem} /></h6>
-            <h6>Background: <input className="textboxy" type="color" name="background" value={background} onChange={this.changeItem} /></h6>
-            <h6>Border Color: <input className="textboxy" type="color" name="bordercolor" value={bordercolor} onChange={this.changeItem} /></h6>
-            <h6>Border Thickness: <input className="textboxy" type="text" name="borderthickness" value={borderthickness} onChange={this.changeItem} /></h6>
-            <h6>Border Radius: <input className="textboxy" type="text" name="borderradius" value={borderradius} onChange={this.changeItem} /></h6>
+            <h6>Font Size: <input className="textboxy" type="text" id="theFontsize" name="fontsize" value={fontsize} onChange={this.changeItem} /></h6>
+            <h6>Font Color: <input className="textboxy" type="color" id="theFontcolor" name="fontcolor" value={fontcolor} onChange={this.changeItem} /></h6>
+            <h6>Background: <input className="textboxy" type="color" id="theBackground" name="background" value={background} onChange={this.changeItem} /></h6>
+            <h6>Border Color: <input className="textboxy" type="color" id="theBordercolor" name="bordercolor" value={bordercolor} onChange={this.changeItem} /></h6>
+            <h6>Border Thickness: <input className="textboxy" type="text" id="theBorderthickness" name="borderthickness" value={borderthickness} onChange={this.changeItem} /></h6>
+            <h6>Border Radius: <input className="textboxy" type="text" id="theBorderradius" name="borderradius" value={borderradius} onChange={this.changeItem} /></h6>
           </div>
 
 

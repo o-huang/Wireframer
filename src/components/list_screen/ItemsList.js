@@ -14,9 +14,7 @@ class ItemsList extends React.Component {
 
     selected = (event) => {
         const { wireFrameItem } = this.props;
-        // console.log(wireFrameItem)
         this.props.setSelectedItem(event,wireFrameItem)
-        
     }
 
     render() {
@@ -25,6 +23,7 @@ class ItemsList extends React.Component {
 
         const divStyle = {
             fontSize: wireFrameItem.fontsize,
+            color:wireFrameItem.fontcolor,
             backgroundColor: wireFrameItem.background,
             borderColor: wireFrameItem.bordercolor,
             borderWidth: wireFrameItem.borderthickness,
@@ -35,6 +34,7 @@ class ItemsList extends React.Component {
         const labelStyle = {
             border: "1px solid",
             fontSize: wireFrameItem.fontsize,
+            color:wireFrameItem.fontcolor,
             backgroundColor: wireFrameItem.background,
             borderColor: wireFrameItem.bordercolor,
             borderWidth: wireFrameItem.borderthickness,
@@ -53,6 +53,7 @@ class ItemsList extends React.Component {
 
         const textFieldStyle = {
             fontSize: wireFrameItem.fontsize,
+            color:wireFrameItem.fontcolor,
             backgroundColor: wireFrameItem.background,
             borderColor: wireFrameItem.bordercolor,
             borderWidth: wireFrameItem.borderthickness,
@@ -62,7 +63,7 @@ class ItemsList extends React.Component {
         let thing = ""
         if (wireFrameItem.type == "button") {
             thing = (
-                <button style={divStyle} id="newButton" className="zoom" onClick={this.selected}>{wireFrameItem.text} </button>
+                <button style={divStyle} className="zoom" onClick={this.selected}>{wireFrameItem.text} </button>
             )
         }
         else if (wireFrameItem.type == "label") {
