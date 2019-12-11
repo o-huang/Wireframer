@@ -10,8 +10,8 @@
                     "type": "label",
                     "text": "login",
                     "fontsize": "25px",
-                    "background": "red",
-                    "bordercolor": "green",
+                    "background": "#489837",
+                    "bordercolor": "#489837",
                     "borderthickness": "1px",
                     "borderradius": "1px"
                 },
@@ -20,16 +20,16 @@
                     "type": "button",
                     "text": "submit",
                     "fontsize": "40px",
-                    "background": "white",
-                    "bordercolor": "black",
+                    "background": "#376f98",
+                    "bordercolor": "#376f98",
                     "borderthickness": "2px",
                     "borderradius": "2px"
                 },
                 {
                     "key": 2,
                     "type": "container",
-                    "background": "green",
-                    "bordercolor": "red",
+                    "background": "#499837",
+                    "bordercolor": "#499837",
                     "borderthickness": "10px",
                     "borderradius": "10px"
                 },
@@ -38,8 +38,8 @@
                     "type": "textfield",
                     "text": "World Bye",
                     "fontsize": "10px",
-                    "background": "yellow",
-                    "bordercolor": "red",
+                    "background": "#983753",
+                    "bordercolor": "#983753",
                     "borderthickness": "15px",
                     "borderradius": "10px"
                 }

@@ -36,8 +36,20 @@ class HomeScreen extends Component {
             wireFrameList: theWireFrameList
         })
 
+        const users = this.props.users
+        for (var x in users) {
+            if (users[x].id == this.props.auth.uid) {
+                theUser = users[x]
+            }
+        }
+        var copyUser =""
+        copyUser = Object.assign({},theUser)
         this.props.history.push({
-            pathname: "/wireframe/" + newWireFrame.key
+            pathname: "/wireframe/" + newWireFrame.key,
+            state:{
+                theWireFrame: newWireFrame,
+                theUser: copyUser
+            }
 
         })
     }

@@ -7,11 +7,16 @@ import { Modal, Button, Icon, Checkbox } from 'react-materialize'
 import { getFirestore } from 'redux-firestore';
 import { Link } from 'react-router-dom';
 import Draggable from 'react-draggable';
+import PropTypes from 'prop-types';
+import { Resizable } from "re-resizable";
 
 class ItemsList extends React.Component {
 
-    selected = () => {
-        console.log("hi")
+    selected = (event) => {
+        const { wireFrameItem } = this.props;
+        // console.log(wireFrameItem)
+        this.props.setSelectedItem(event,wireFrameItem)
+        
     }
 
     render() {
@@ -24,6 +29,7 @@ class ItemsList extends React.Component {
             borderColor: wireFrameItem.bordercolor,
             borderWidth: wireFrameItem.borderthickness,
             borderRadius: wireFrameItem.borderradius,
+       
         }
 
         const labelStyle = {
@@ -56,32 +62,32 @@ class ItemsList extends React.Component {
         let thing = ""
         if (wireFrameItem.type == "button") {
             thing = (
-                <button style={divStyle} id="newButton" className="zoom">{wireFrameItem.text}</button>
+                <button style={divStyle} id="newButton" className="zoom" onClick={this.selected}>{wireFrameItem.text} </button>
             )
         }
         else if (wireFrameItem.type == "label") {
             thing = (
                 <div className="zoom changeWidth">
-                    <label style={labelStyle} >{wireFrameItem.text}</label>
+                    <label style={labelStyle} onClick={this.selected}>{wireFrameItem.text}</label>
                 </div>
-                
+
             )
         } else if (wireFrameItem.type == "container") {
             thing = (
-                <div style={containerStyle} className="zoom"></div>
+                <div style={containerStyle} className="zoom" onClick={this.selected}></div>
             )
         } else {
             thing = (
-                <input type="text" style={textFieldStyle} placeholder="input" value={wireFrameItem.text} className="browser-default zoom" id="inputTextBox" />
+                <input type="text" style={textFieldStyle} placeholder="input" value={wireFrameItem.text} className="browser-default zoom" id="inputTextBox" onClick={this.selected}/>
             )
         }
 
         return (
-            <Draggable bounds=".boundThis">
-                <div className="changeWidth" >
-                    {thing}
-                </div>
-            </Draggable>
+                <Draggable bounds=".boundThis">
+                    <div className="changeWidth" >
+                        {thing}
+                    </div>
+                </Draggable>
         );
     }
 }

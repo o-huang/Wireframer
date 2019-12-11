@@ -6,6 +6,7 @@
     "firebase": "^7.2.2",
     "materialize-css": "^1.0.0",
     "moment": "^2.24.0",
+    "re-resizable": "^6.1.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-draggable": "^4.2.0",

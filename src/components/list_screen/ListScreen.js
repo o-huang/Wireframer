@@ -16,7 +16,17 @@ class ListScreen extends Component {
   state = {
     name: '',
     theUser: this.props.location.state.theUser,
-    theWireFrame: this.props.location.state.theWireFrame
+    theWireFrame: this.props.location.state.theWireFrame,
+    didISave: false,
+    //-------------------------------------------------------------
+    properties: "",
+    fontsize: "",
+    background: "",
+    bordercolor: "",
+    borderthickness: "",
+    borderradius: "",
+    //-------------------------------------------------------------
+    selectedItem: ""
   }
 
   handleChange = (event) => {
@@ -119,7 +129,7 @@ class ListScreen extends Component {
     var cols = document.getElementsByClassName("zoom")
     for (var i = 0; i < cols.length; i++) {
       if (cols[i].style.transform == "") {
-        cols[i].style.transform = "scale(1.2)"
+        cols[i].style.transform = "scale(2)"
       }
       else {
         var firstPar = cols[i].style.transform.indexOf("(")
@@ -127,10 +137,10 @@ class ListScreen extends Component {
         firstPar += 1
         var theNumber = cols[i].style.transform.substring(firstPar, secondPar)
         var theNumber = parseFloat(theNumber)
-        if (theNumber + .2 < 10) {
-          theNumber = theNumber + .2
-          var theString = "scale("+theNumber+")"
-          cols[i].style.transform= theString
+        if (theNumber * 2 < 10) {
+          theNumber = theNumber * 2
+          var theString = "scale(" + theNumber + ")"
+          cols[i].style.transform = theString
         }
       }
     }
@@ -140,7 +150,7 @@ class ListScreen extends Component {
     var cols = document.getElementsByClassName("zoom")
     for (var i = 0; i < cols.length; i++) {
       if (cols[i].style.transform == "") {
-        cols[i].style.transform = "scale(.8)"
+        cols[i].style.transform = "scale(.5)"
       }
       else {
         var firstPar = cols[i].style.transform.indexOf("(")
@@ -148,13 +158,65 @@ class ListScreen extends Component {
         firstPar += 1
         var theNumber = cols[i].style.transform.substring(firstPar, secondPar)
         var theNumber = parseFloat(theNumber)
-        if (theNumber - .2 >.2) {
-          theNumber = theNumber - .2
-          var theString = "scale("+theNumber+")"
-          cols[i].style.transform= theString
+        if (theNumber / 2 > .2) {
+          theNumber = theNumber / 2
+          var theString = "scale(" + theNumber + ")"
+          cols[i].style.transform = theString
         }
       }
     }
+  }
+
+  checkSaved = () => {
+    if (this.state.didISave == false) {
+      if (window.confirm("Do you want to save first?")) {
+
+      } else {
+        this.props.history.push({
+          pathname: "/",
+        })
+      }
+    } else {
+      this.props.history.push({
+        pathname: "/",
+      })
+    }
+  }
+
+  changeItem = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+    console.log(document.getElementById("theProperties").value)
+    console.log(this.state.properties)
+    // this.state.selectedItem
+
+  }
+
+  setSelectedItem = (event, currentItemSelected) => {
+  
+    event.stopPropagation()
+    this.setState({ selectedItem: currentItemSelected })
+
+    this.setState({ properties: currentItemSelected.text })
+    this.setState({ fontsize: currentItemSelected.fontsize })
+    this.setState({ background: currentItemSelected.background })
+    this.setState({ bordercolor: currentItemSelected.bordercolor })
+    this.setState({ borderthickness: currentItemSelected.borderthickness })
+    this.setState({ borderradius: currentItemSelected.borderradius })
+
+
+
+  }
+
+  setItemSelectedEmpty = () => {
+
+    this.setState({ properties: "" })
+    this.setState({ fontsize: "" })
+    this.setState({ background: "" })
+    this.setState({ bordercolor: "" })
+    this.setState({ borderthickness: "" })
+    this.setState({ borderradius: "" })
   }
 
 
@@ -167,11 +229,19 @@ class ListScreen extends Component {
 
     var wireFrameItems = this.state.theWireFrame.list
 
+    const properties = this.state.properties
+    const fontsize = this.state.fontsize
+    const background = this.state.background
+    const bordercolor = this.state.bordercolor
+    const borderthickness = this.state.borderthickness
+    const borderradius = this.state.borderradius
+
+
     return (
 
 
 
-      <div className="container white">
+      <div className="container white" >
         {/* Row for the name */}
 
         <div className="row nameRow">
@@ -205,7 +275,8 @@ class ListScreen extends Component {
                     <i className="material-icons">save</i>
                   </div>
                   <div className="col s3">
-                    <Link to="/"><i className="material-icons">cancel</i></Link>
+
+                    <i className="material-icons" onClick={this.checkSaved}>cancel</i>
                   </div>
                 </div>
               </div>
@@ -247,9 +318,9 @@ class ListScreen extends Component {
 
           <div className="col s8" >
             <div className="box" style={{ height: '550px', width: '832px', position: 'relative', overflow: 'auto', padding: '0' }}>
-              <div className="boundThis" style={{ height: '2000px', width: '2000px', padding: '10px' }}>
+              <div className="boundThis" style={{ height: '2000px', width: '2000px', padding: '10px' }} onClick={this.setItemSelectedEmpty}>
                 {wireFrameItems && wireFrameItems.map(wireframe => (
-                  <ItemsList wireFrameItem={wireframe} />
+                  <ItemsList wireFrameItem={wireframe} setSelectedItem={this.setSelectedItem.bind(this)} />
                 ))}
               </div>
             </div>
@@ -257,12 +328,12 @@ class ListScreen extends Component {
 
 
           <div className="col s2  boxfield z-depth-1 rightbox rightContainer">
-            <h6>Properties: <input className="textboxy" type="text" /></h6>
-            <h6>Font Size: <input className="textboxy" type="text" /></h6>
-            <h6>Background: <input className="textboxy" type="text" /></h6>
-            <h6>Border Color: <input className="textboxy" type="text" /></h6>
-            <h6>Border Thickness: <input className="textboxy" type="text" /></h6>
-            <h6>Border Radius: <input className="textboxy" type="text" /></h6>
+            <h6>Properties: <input className="textboxy" type="text" id="theProperties" name="properties" value={properties} onChange={this.changeItem} /></h6>
+            <h6>Font Size: <input className="textboxy" type="text" name="fontsize" value={fontsize} onChange={this.changeItem} /></h6>
+            <h6>Background: <input className="textboxy" type="color" name="background" value={background} onChange={this.changeItem} /></h6>
+            <h6>Border Color: <input className="textboxy" type="color" name="bordercolor" value={bordercolor} onChange={this.changeItem} /></h6>
+            <h6>Border Thickness: <input className="textboxy" type="text" name="borderthickness" value={borderthickness} onChange={this.changeItem} /></h6>
+            <h6>Border Radius: <input className="textboxy" type="text" name="borderradius" value={borderradius} onChange={this.changeItem} /></h6>
           </div>
 
 
