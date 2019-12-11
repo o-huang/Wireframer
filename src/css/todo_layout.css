@@ -82,7 +82,7 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.mat
 .nameAndPassword {
   position: relative;
   font-size: 20px;
-  top:2px;
+  top: 2px;
   right: 10%;
 }
 
@@ -201,11 +201,10 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.mat
   width: 80%;
 }
 
-
-
-.homeDelete{
-  position: absolute;;
-  color:yellowgreen;
+.homeDelete {
+  position: absolute;
+  ;
+  color: yellowgreen;
   left: 85%;
 }
 
@@ -213,49 +212,47 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.mat
   color: red;
 }
 
-.boxfield
-{
-  border:1px solid black;  
+.boxfield {
+  border: 1px solid black;
   border-radius: 3px;
   margin-top: 3px;
 }
 
-.leftContainer{
+.leftContainer {
   height: 450px;
 }
 
-.rightContainer{
+.rightContainer {
   height: 510px;
 }
 
-.propContainer{
-  border:1px solid black;  
+.propContainer {
+  border: 1px solid black;
   height: 60px;
   width: 120px;
-
 }
 
-.leftRow{
+.leftRow {
   padding-top: 1000px;
 }
 
-.centerIt{
+.centerIt {
   display: block;
   text-align: center;
   align-items: center;
 }
 
-#boxPadding{
+#boxPadding {
   padding-top: 25px;
 }
 
-#flex{
+#flex {
   display: flex;
   justify-content: center;
   padding-bottom: 5px;
 }
 
-#test{
+#test {
   touch-action: none;
   transform: translate(-18px, 7px);
 }
@@ -270,14 +267,25 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.mat
   float: left;
 }
 
-.changeWidth{
+.changeWidth {
   width: max-content;
-  position:absolute;
+  position: absolute;
 }
 
-#inputTextBox{
+#inputTextBox {
   width: 150px;
-  
 }
 
+/* .square {
+  background: white none repeat scroll 0% 0%;
+  border-radius: 1px;
+  width: 7px;
+  border: 1px solid rgb(235, 86, 72);
+  position: absolute;
+  height: 7px;
+}
 
+.t{
+  left: -1%;
+  top: -1%;;
+} */

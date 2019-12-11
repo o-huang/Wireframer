@@ -13,6 +13,12 @@ import Draggable from 'react-draggable';
 var theUser = ""
 var zoomDefaultSize = 1
 class ListScreen extends Component {
+
+  constructor(props) {
+    super(props)
+    this.buttonPress = this.buttonPress.bind(this);
+  }
+
   state = {
     name: '',
     theUser: this.props.location.state.theUser,
@@ -28,6 +34,34 @@ class ListScreen extends Component {
     borderradius: "",
     //-------------------------------------------------------------
     selectedItem: ""
+  }
+
+  buttonPress = (event) => {
+
+    if (event.keyCode === 46) {
+      event.preventDefault()
+      var copyList = Object.assign({}, this.state.theWireFrame)
+      var index = copyList.list.indexOf(this.state.selectedItem)
+      console.log(this.state.selectedItem.p)
+      if (index != -1) {
+        copyList.list.splice(index, 1)
+        this.setState({ theWireFrame: copyList })
+        this.setState({ selectedItem: "" })
+      }
+    }
+
+    if (event.ctrlKey && event.keyCode === 68) {
+      event.preventDefault()
+      console.log("copying")
+    }
+  }
+  componentDidMount() {
+    document.addEventListener("keydown", this.buttonPress, false);
+
+  }
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.buttonPress, false);
+
   }
 
   handleChange = (event) => {
@@ -129,8 +163,27 @@ class ListScreen extends Component {
     this.setState({ theWireFrame: copy })
   }
 
+  nth_occurrence(string, char, nth) {
+    var first_index = string.indexOf(char);
+    var length_up_to_first_index = first_index + 1;
+
+    if (nth == 1) {
+      return first_index;
+    } else {
+      var string_after_first_occurrence = string.slice(length_up_to_first_index);
+      var next_occurrence = this.nth_occurrence(string_after_first_occurrence, char, nth - 1);
+
+      if (next_occurrence === -1) {
+        return -1;
+      } else {
+        return length_up_to_first_index + next_occurrence;
+      }
+    }
+  }
+
   zoomIn = () => {
     var cols = document.getElementsByClassName("zoom")
+
     for (var i = 0; i < cols.length; i++) {
       if (cols[i].style.transform == "") {
         cols[i].style.transform = "scale(2)"
@@ -157,16 +210,23 @@ class ListScreen extends Component {
         cols[i].style.transform = "scale(.5)"
       }
       else {
-        var firstPar = cols[i].style.transform.indexOf("(")
-        var secondPar = cols[i].style.transform.indexOf(")")
-        firstPar += 1
-        var theNumber = cols[i].style.transform.substring(firstPar, secondPar)
-        var theNumber = parseFloat(theNumber)
-        if (theNumber / 2 > .2) {
-          theNumber = theNumber / 2
-          var theString = "scale(" + theNumber + ")"
-          cols[i].style.transform = theString
+        var firstPar = this.nth_occurrence(cols[i].style.transform, "(", 2)
+        if (firstPar == -1) {
+          cols[i].style.transform += " scale(.5) !important"
+        } else {
+          var secondPar = this.nth_occurrence(cols[i].style.transform, ")", 2)
+          firstPar += 1
+          var theNumber = cols[i].style.transform.substring(firstPar, secondPar)
+          var theNumber = parseFloat(theNumber)
+          if (theNumber / 2 > .2) {
+            theNumber = theNumber / 2
+
+            cols[i].style.transform = cols[i].style.transform.replace(/scale\([0-9|\.]*\)/, 'scale(' + theNumber + ')');
+
+          }
+
         }
+
       }
     }
   }
@@ -188,18 +248,19 @@ class ListScreen extends Component {
   }
 
   changeItem = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
+    if (this.state.selectedItem != "") {
+      this.setState({
+        [event.target.name]: event.target.value
+      })
 
-    this.state.selectedItem.text = document.getElementById("theProperties").value
-    this.state.selectedItem.fontsize = document.getElementById("theFontsize").value + "px"
-    this.state.selectedItem.fontcolor = document.getElementById("theFontcolor").value
-    this.state.selectedItem.background = document.getElementById("theBackground").value
-    this.state.selectedItem.bordercolor = document.getElementById("theBordercolor").value
-    this.state.selectedItem.borderthickness = document.getElementById("theBorderthickness").value + "px"
-    this.state.selectedItem.borderradius = document.getElementById("theBorderradius").value + "px"
-
+      this.state.selectedItem.text = document.getElementById("theProperties").value
+      this.state.selectedItem.fontsize = document.getElementById("theFontsize").value + "px"
+      this.state.selectedItem.fontcolor = document.getElementById("theFontcolor").value
+      this.state.selectedItem.background = document.getElementById("theBackground").value
+      this.state.selectedItem.bordercolor = document.getElementById("theBordercolor").value
+      this.state.selectedItem.borderthickness = document.getElementById("theBorderthickness").value + "px"
+      this.state.selectedItem.borderradius = document.getElementById("theBorderradius").value + "px"
+    }
   }
 
   setSelectedItem = (event, currentItemSelected) => {
@@ -216,14 +277,15 @@ class ListScreen extends Component {
       this.setState({ fontsize: parseInt(currentItemSelected.fontsize) })
       this.setState({ fontcolor: currentItemSelected.fontcolor })
     }
-    
+
     this.setState({ background: currentItemSelected.background })
     this.setState({ bordercolor: currentItemSelected.bordercolor })
-    this.setState({ borderthickness: parseInt(currentItemSelected.borderthickness )})
+    this.setState({ borderthickness: parseInt(currentItemSelected.borderthickness) })
     this.setState({ borderradius: parseInt(currentItemSelected.borderradius) })
   }
 
   setItemSelectedEmpty = () => {
+    this.setState({ selectedItem: "" })
     this.setState({ properties: "" })
     this.setState({ fontsize: "" })
     this.setState({ fontcolor: "" })
@@ -253,7 +315,7 @@ class ListScreen extends Component {
 
 
 
-      <div className="container white" >
+      <div className="container white" onKeyDown={this.handleKeyDown}>
         {/* Row for the name */}
 
         <div className="row nameRow">
@@ -330,7 +392,7 @@ class ListScreen extends Component {
 
           <div className="col s8" >
             <div className="box" style={{ height: '550px', width: '832px', position: 'relative', overflow: 'auto', padding: '0' }}>
-              <div className="boundThis" style={{ height: '2000px', width: '2000px', padding: '10px' }} onClick={this.setItemSelectedEmpty}>
+              <div className="boundThis" style={{ height: '1000px', width: '1000px', padding: '10px', overflow: "auto" }} onClick={this.setItemSelectedEmpty}>
                 {wireFrameItems && wireFrameItems.map(wireframe => (
                   <ItemsList wireFrameItem={wireframe} setSelectedItem={this.setSelectedItem.bind(this)} />
                 ))}

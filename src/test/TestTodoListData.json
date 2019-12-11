@@ -7,43 +7,42 @@
             "items": [
                 {
                     "key": 0,
-                    "type": "label",
-                    "text": "login",
-                    "fontsize": "25px",
-                    "fontcolor": "#000000",
-                    "background": "#489837",
-                    "bordercolor": "#489837",
-                    "borderthickness": "1px",
-                    "borderradius": "1px"
+                    "type": "container",
+                    "background": "#499837",
+                    "bordercolor": "#376f98",
+                    "borderthickness": "10px",
+                    "borderradius": "10px"
                 },
                 {
                     "key": 1,
+                    "type": "label",
+                    "text": "login",
+                    "fontsize": "40px",
+                    "fontcolor": "#000000",
+                    "background": "#489837",
+                    "bordercolor": "#FF4500",
+                    "borderthickness": "10px",
+                    "borderradius": "10px"
+                },
+                {
+                    "key": 2,
                     "type": "button",
                     "text": "submit",
                     "fontsize": "40px",
                     "fontcolor": "#000000",
                     "background": "#376f98",
-                    "bordercolor": "#376f98",
-                    "borderthickness": "2px",
-                    "borderradius": "2px"
-                },
-                {
-                    "key": 2,
-                    "type": "container",
-                 
-                    "background": "#499837",
-                    "bordercolor": "#499837",
-                    "borderthickness": "10px",
-                    "borderradius": "10px"
+                    "bordercolor": "#FF4500",
+                    "borderthickness": "20px",
+                    "borderradius": "20px"
                 },
                 {
                     "key": 3,
                     "type": "textfield",
                     "text": "World Bye",
-                    "fontsize": "10px",
+                    "fontsize": "40px",
                     "fontcolor": "#000000",
                     "background": "#983753",
-                    "bordercolor": "#983753",
+                    "bordercolor": "#FF4500",
                     "borderthickness": "15px",
                     "borderradius": "10px"
                 }
@@ -60,8 +59,8 @@
                     "text": "button1",
                     "fontsize": "10px",
                     "fontcolor": "#000000",
-                    "background": "white",
-                    "bordercolor": "black",
+                    "background": "#983753",
+                    "bordercolor": "#FF4500",
                     "borderthickness": "1px",
                     "borderradius": "1px"
                 },
@@ -71,8 +70,8 @@
                     "text": "button2",
                     "fontsize": "30px",
                     "fontcolor": "#000000",
-                    "background": "white",
-                    "bordercolor": "black",
+                    "background": "#983753",
+                    "bordercolor": "#FF4500",
                     "borderthickness": "2px",
                     "borderradius": "2px"
                 },
@@ -82,8 +81,8 @@
                     "text": "button3",
                     "fontsize": "40px",
                     "fontcolor": "#000000",
-                    "background": "white",
-                    "bordercolor": "black",
+                    "background": "#983753",
+                    "bordercolor": "#FF4500",
                     "borderthickness": "3px",
                     "borderradius": "3px"
                 }
@@ -100,8 +99,8 @@
                     "text": "MyLabel",
                     "fontsize": "12px",
                     "fontcolor": "#000000",
-                    "background": "red",
-                    "bordercolor": "green",
+                    "background": "#FF4500",
+                    "bordercolor": "#983753",
                     "borderthickness": "1px",
                     "borderradius": "1px"
                 },
@@ -111,8 +110,8 @@
                     "text": "Hello",
                     "fontsize": "10px",
                     "fontcolor": "#000000",
-                    "background": "white",
-                    "bordercolor": "black",
+                    "background": "#FF4500",
+                    "bordercolor": "#983753",
                     "borderthickness": "2px",
                     "borderradius": "1px"
                 },
@@ -122,8 +121,8 @@
                     "text": "World",
                     "fontsize": "10px",
                     "fontcolor": "#000000",
-                    "background": "white",
-                    "bordercolor": "black",
+                    "background": "#FF4500",
+                    "bordercolor": "#983753",
                     "borderthickness": "1px",
                     "borderradius": "2px"
                 },
@@ -133,8 +132,8 @@
                     "text": "Delete",
                     "fontsize": "12px",
                     "fontcolor": "#000000",
-                    "background": "green",
-                    "bordercolor": "red",
+                    "background": "#FF4500",
+                    "bordercolor": "#983753",
                     "borderthickness": "4px",
                     "borderradius": "3px"
                 }
