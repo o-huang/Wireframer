@@ -52,6 +52,7 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.mat
 
 .container {
   width: 100%;
+
 }
 
 .todoListArea {
@@ -219,11 +220,11 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.mat
 }
 
 .leftContainer {
-  height: 450px;
+  height: 600px;
 }
 
 .rightContainer {
-  height: 510px;
+  height: 660px;
 }
 
 .propContainer {
@@ -243,7 +244,7 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.mat
 }
 
 #boxPadding {
-  padding-top: 25px;
+  padding-top: 50px;
 }
 
 #flex {
@@ -275,7 +276,14 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.mat
 #inputTextBox {
   width: 150px;
 }
+.zoom{
+  display: inline-block;
+  overflow: hidden;
+}
 
+#changeWhiteContainer{
+  max-width: max-content;
+}
 /* .square {
   background: white none repeat scroll 0% 0%;
   border-radius: 1px;

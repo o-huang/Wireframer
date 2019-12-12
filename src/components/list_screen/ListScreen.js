@@ -42,11 +42,11 @@ class ListScreen extends Component {
       event.preventDefault()
       var copyList = Object.assign({}, this.state.theWireFrame)
       var index = copyList.list.indexOf(this.state.selectedItem)
-      console.log(this.state.selectedItem.p)
       if (index != -1) {
         copyList.list.splice(index, 1)
         this.setState({ theWireFrame: copyList })
         this.setState({ selectedItem: "" })
+
       }
     }
 
@@ -105,7 +105,11 @@ class ListScreen extends Component {
       background: "#FFFFFF",
       bordercolor: "#000000",
       borderthickness: "1px",
-      borderradius: "1px"
+      borderradius: "1px",
+      x: "10",
+      y: "10",
+      width: "300px",
+      height: "300px"
     }
     copy.list.push(newContainer)
     this.setState({ theWireFrame: copy })
@@ -122,7 +126,11 @@ class ListScreen extends Component {
       background: "#FFFFFF",
       bordercolor: "#000000",
       borderthickness: "1px",
-      borderradius: "1px"
+      borderradius: "1px",
+      x: "10",
+      y: "10",
+      width: "140px",
+      height: "30px"
     }
     copy.list.push(newLabel)
     this.setState({ theWireFrame: copy })
@@ -139,7 +147,11 @@ class ListScreen extends Component {
       background: "#FFFFFF",
       bordercolor: "#000000",
       borderthickness: "1px",
-      borderradius: "1px"
+      borderradius: "1px",
+      x: "10",
+      y: "10",
+      width: "100px",
+      height: "50px"
     }
     copy.list.push(newButton)
     this.setState({ theWireFrame: copy })
@@ -158,28 +170,16 @@ class ListScreen extends Component {
       bordercolor: "#000000",
       borderthickness: "1px",
       borderradius: "1px",
+      x: "10",
+      y: "10",
+      width: "200px",
+      height: "75px"
     }
     copy.list.push(newTextfield)
     this.setState({ theWireFrame: copy })
   }
 
-  nth_occurrence(string, char, nth) {
-    var first_index = string.indexOf(char);
-    var length_up_to_first_index = first_index + 1;
 
-    if (nth == 1) {
-      return first_index;
-    } else {
-      var string_after_first_occurrence = string.slice(length_up_to_first_index);
-      var next_occurrence = this.nth_occurrence(string_after_first_occurrence, char, nth - 1);
-
-      if (next_occurrence === -1) {
-        return -1;
-      } else {
-        return length_up_to_first_index + next_occurrence;
-      }
-    }
-  }
 
   zoomIn = () => {
     var cols = document.getElementsByClassName("zoom")
@@ -210,23 +210,16 @@ class ListScreen extends Component {
         cols[i].style.transform = "scale(.5)"
       }
       else {
-        var firstPar = this.nth_occurrence(cols[i].style.transform, "(", 2)
-        if (firstPar == -1) {
-          cols[i].style.transform += " scale(.5) !important"
-        } else {
-          var secondPar = this.nth_occurrence(cols[i].style.transform, ")", 2)
-          firstPar += 1
-          var theNumber = cols[i].style.transform.substring(firstPar, secondPar)
-          var theNumber = parseFloat(theNumber)
-          if (theNumber / 2 > .2) {
-            theNumber = theNumber / 2
-
-            cols[i].style.transform = cols[i].style.transform.replace(/scale\([0-9|\.]*\)/, 'scale(' + theNumber + ')');
-
-          }
-
+        var firstPar = cols[i].style.transform.indexOf("(")
+        var secondPar = cols[i].style.transform.indexOf(")")
+        firstPar += 1
+        var theNumber = cols[i].style.transform.substring(firstPar, secondPar)
+        var theNumber = parseFloat(theNumber)
+        if (theNumber / 2 > .2) {
+          theNumber = theNumber / 2
+          var theString = "scale(" + theNumber + ")"
+          cols[i].style.transform = theString
         }
-
       }
     }
   }
@@ -264,7 +257,7 @@ class ListScreen extends Component {
   }
 
   setSelectedItem = (event, currentItemSelected) => {
-    console.log(currentItemSelected)
+
     event.stopPropagation()
     this.setState({ selectedItem: currentItemSelected })
 
@@ -315,7 +308,7 @@ class ListScreen extends Component {
 
 
 
-      <div className="container white" onKeyDown={this.handleKeyDown}>
+      <div className="container white" id="changeWhiteContainer" onKeyDown={this.handleKeyDown}>
         {/* Row for the name */}
 
         <div className="row nameRow">
@@ -391,8 +384,8 @@ class ListScreen extends Component {
 
 
           <div className="col s8" >
-            <div className="box" style={{ height: '550px', width: '832px', position: 'relative', overflow: 'auto', padding: '0' }}>
-              <div className="boundThis" style={{ height: '1000px', width: '1000px', padding: '10px', overflow: "auto" }} onClick={this.setItemSelectedEmpty}>
+            <div className="box" style={{ height: '660px', width: '995px', position: 'relative', overflow: 'auto', padding: '0' }}>
+              <div className="boundThis" id="cleanDiv" style={{ height: '2000px', width: '2000px', padding: '10px', overflow: "auto" }} onClick={this.setItemSelectedEmpty}>
                 {wireFrameItems && wireFrameItems.map(wireframe => (
                   <ItemsList wireFrameItem={wireframe} setSelectedItem={this.setSelectedItem.bind(this)} />
                 ))}

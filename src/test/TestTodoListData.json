@@ -11,40 +11,56 @@
                     "background": "#499837",
                     "bordercolor": "#376f98",
                     "borderthickness": "10px",
-                    "borderradius": "10px"
+                    "borderradius": "10px",
+                    "x": "320",
+                    "y": "153",
+                    "width": "254px",
+                    "height": "177px"
                 },
                 {
                     "key": 1,
                     "type": "label",
-                    "text": "login",
-                    "fontsize": "40px",
+                    "text": "label",
+                    "fontsize": "10px",
                     "fontcolor": "#000000",
                     "background": "#489837",
                     "bordercolor": "#FF4500",
-                    "borderthickness": "10px",
-                    "borderradius": "10px"
+                    "borderthickness": "5px",
+                    "borderradius": "5px",
+                    "x": "475",
+                    "y": "182",
+                    "width": "44px",
+                    "height": "27px"
                 },
                 {
                     "key": 2,
                     "type": "button",
-                    "text": "submit",
-                    "fontsize": "40px",
+                    "text": "button",
+                    "fontsize": "10px",
                     "fontcolor": "#000000",
                     "background": "#376f98",
                     "bordercolor": "#FF4500",
-                    "borderthickness": "20px",
-                    "borderradius": "20px"
+                    "borderthickness": "5px",
+                    "borderradius": "5px",
+                    "x": "337",
+                    "y": "172",
+                    "width": "77px",
+                    "height": "43px"
                 },
                 {
                     "key": 3,
                     "type": "textfield",
-                    "text": "World Bye",
-                    "fontsize": "40px",
+                    "text": "textfield",
+                    "fontsize": "10px",
                     "fontcolor": "#000000",
                     "background": "#983753",
                     "bordercolor": "#FF4500",
-                    "borderthickness": "15px",
-                    "borderradius": "10px"
+                    "borderthickness": "5px",
+                    "borderradius": "5px",
+                    "x": "472",
+                    "y": "272",
+                    "width": "88px",
+                    "height": "40px"
                 }
             ]
         },

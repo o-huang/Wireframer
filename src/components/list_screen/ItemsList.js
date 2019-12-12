@@ -14,15 +14,37 @@ import { Rnd } from "react-rnd";
 import interact from 'interactjs'
 class ItemsList extends React.Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+
+            wire: this.props.wireFrameItem,
+            x: this.props.wireFrameItem.x,
+            y: this.props.wireFrameItem.y,
+            width: this.props.wireFrameItem.width,
+            height: this.props.wireFrameItem.height,
+
+
+        }
+    }
+
+
+
+
+
     selected = (event) => {
         const { wireFrameItem } = this.props;
         this.props.setSelectedItem(event, wireFrameItem)
-        console.log("hi")
+        // console.log(event.target.parentElement)
+        // var btn = document.createElement("BUTTON")
+        // btn.innerHTML= "hi"
+        // event.target.parentElement.appendChild(btn)
+
     }
 
     render() {
         const { wireFrameItem } = this.props;
-
+        console.log(wireFrameItem)
 
         const buttonStyle = {
             fontSize: wireFrameItem.fontsize,
@@ -73,56 +95,114 @@ class ItemsList extends React.Component {
             height: "100%",
 
         }
-
-
         const style = {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             border: "solid 1px #ddd",
             background: "#f0f0f0",
+            
         };
-
         let thing = ""
         if (wireFrameItem.type == "button") {
             thing = (
-                <Rnd style={style} >
-                    <button style={buttonStyle} className="" onClick={this.selected}>{wireFrameItem.text} </button>
+                <Rnd style={style} size={{ width: this.state.width, height: this.state.height }}
+                    position={{ x: this.state.x, y: this.state.y }}
+                    onDragStop={(e, d) => {
+                        this.props.wireFrameItem.x = d.x
+                        this.props.wireFrameItem.y = d.y
+                        this.setState({ x: d.x, y: d.y })
+                    }}
+                    onResizeStop={(e, direction, ref, delta, position) => {
+
+                        this.props.wireFrameItem.width = ref.style.width
+                        this.props.wireFrameItem.height = ref.style.height
+                        this.setState({
+
+                            width: ref.style.width,
+                            height: ref.style.height,
+                            ...position,
+                        });
+                    }} >
+                    <button style={buttonStyle} onClick={this.selected}>{wireFrameItem.text} </button>
                 </Rnd>
             )
         }
         else if (wireFrameItem.type == "label") {
             thing = (
-                <Rnd style={style}  >
-                    <label style={labelStyle} onClick={this.selected} className="">{wireFrameItem.text}</label>
+                <Rnd style={style} size={{ width: this.state.width, height: this.state.height }}
+                    position={{ x: this.state.x, y: this.state.y }}
+                    onDragStop={(e, d) => {
+                        this.props.wireFrameItem.x = d.x
+                        this.props.wireFrameItem.y = d.y
+                        this.setState({ x: d.x, y: d.y })
+                    }}
+            
+                    onResizeStop={(e, direction, ref, delta, position) => {
+
+                        this.props.wireFrameItem.width = ref.style.width
+                        this.props.wireFrameItem.height = ref.style.height
+                        this.setState({
+
+                            width: ref.style.width,
+                            height: ref.style.height,
+                            ...position,
+                        });
+                    }}>
+                    <label style={labelStyle} onClick={this.selected} >{wireFrameItem.text}</label>
                 </Rnd>
             )
         } else if (wireFrameItem.type == "container") {
             thing = (
-                <Rnd style={style} default={{
-                    x: 0,
-                    y: 0,
-                    width: 320,
-                    height: 200
-                }}>
-                    <div style={containerStyle} className="" onClick={this.selected}></div>
+                <Rnd style={style} size={{ width: this.state.width, height: this.state.height }}
+                    position={{ x: this.state.x, y: this.state.y }}
+                    onDragStop={(e, d) => {
+                        this.props.wireFrameItem.x = d.x
+                        this.props.wireFrameItem.y = d.y
+                        this.setState({ x: d.x, y: d.y })
+                    }}
+                    onResizeStop={(e, direction, ref, delta, position) => {
 
+                        this.props.wireFrameItem.width = ref.style.width
+                        this.props.wireFrameItem.height = ref.style.height
+                        this.setState({
+
+                            width: ref.style.width,
+                            height: ref.style.height,
+                            ...position,
+                        });
+                    }}>
+                    <div style={containerStyle}  onClick={this.selected}></div>
                 </Rnd>
             )
         } else {
             thing = (
-                <Rnd style={style} onClick={this.selected} >
-                    <input type="text" style={textFieldStyle} placeholder="input" value={wireFrameItem.text} className="browser-default" id="inputTextBox" />
+                <Rnd style={style} size={{ width: this.state.width, height: this.state.height }}
+                    position={{ x: this.state.x, y: this.state.y }}
+                    onDragStop={(e, d) => {
+                        this.props.wireFrameItem.x = d.x
+                        this.props.wireFrameItem.y = d.y
+                        this.setState({ x: d.x, y: d.y })
+                    }}
+                    onResizeStop={(e, direction, ref, delta, position) => {
+
+                        this.props.wireFrameItem.width = ref.style.width
+                        this.props.wireFrameItem.height = ref.style.height
+                        this.setState({
+
+                            width: ref.style.width,
+                            height: ref.style.height,
+                            ...position,
+                        });
+                    }}>
+                    <input type="text" style={textFieldStyle} placeholder="input" value={wireFrameItem.text} className="browser-default" id="inputTextBox" onClick={this.selected} />
                 </Rnd>
             )
         }
-
         return (
-            <div>
+            <div className="zoom">
                 {thing}
             </div>
-
-
         );
     }
 }
