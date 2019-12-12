@@ -277,8 +277,7 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.mat
   width: 150px;
 }
 .zoom{
-  display: inline-block;
-  overflow: hidden;
+ 
 }
 
 #changeWhiteContainer{

@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 
 import { Modal, Button, Icon } from 'react-materialize'
 import Draggable from 'react-draggable';
+import { classPrivateMethod } from '@babel/types';
 
 var theUser = ""
 var zoomDefaultSize = 1
@@ -52,7 +53,16 @@ class ListScreen extends Component {
 
     if (event.ctrlKey && event.keyCode === 68) {
       event.preventDefault()
-      console.log("copying")
+      if (this.state.selectedItem != "") {
+        var copyList = Object.assign({}, this.state.theWireFrame)
+        var copyItem = Object.assign({}, this.state.selectedItem)
+        copyItem.x += 100
+        copyItem.y += 100
+        copyItem.key = this.findBiggestKey(copyList)
+        copyList.list.push(copyItem)
+        this.setState({theWireFrame: copyList})
+    
+      }
     }
   }
   componentDidMount() {

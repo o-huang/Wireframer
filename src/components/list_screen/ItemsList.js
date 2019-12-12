@@ -44,7 +44,7 @@ class ItemsList extends React.Component {
 
     render() {
         const { wireFrameItem } = this.props;
-        console.log(wireFrameItem)
+        // console.log(wireFrameItem)
 
         const buttonStyle = {
             fontSize: wireFrameItem.fontsize,
@@ -101,12 +101,14 @@ class ItemsList extends React.Component {
             justifyContent: "center",
             border: "solid 1px #ddd",
             background: "#f0f0f0",
+            width: "100px"
+        
             
         };
         let thing = ""
         if (wireFrameItem.type == "button") {
             thing = (
-                <Rnd style={style} size={{ width: this.state.width, height: this.state.height }}
+                <Rnd style={style} id="helloworld" size={{ width: this.state.width, height: this.state.height }}
                     position={{ x: this.state.x, y: this.state.y }}
                     onDragStop={(e, d) => {
                         this.props.wireFrameItem.x = d.x
@@ -124,7 +126,7 @@ class ItemsList extends React.Component {
                             ...position,
                         });
                     }} >
-                    <button style={buttonStyle} onClick={this.selected}>{wireFrameItem.text} </button>
+                    <button style={buttonStyle} className="zoom" onClick={this.selected}>{wireFrameItem.text} </button>
                 </Rnd>
             )
         }
@@ -200,7 +202,7 @@ class ItemsList extends React.Component {
             )
         }
         return (
-            <div className="zoom">
+            <div >
                 {thing}
             </div>
         );
