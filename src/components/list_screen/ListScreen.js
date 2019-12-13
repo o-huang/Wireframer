@@ -33,10 +33,12 @@ class ListScreen extends Component {
     bordercolor: "",
     borderthickness: "",
     borderradius: "",
+    width: 2000,
+    height: 2000,
     //-------------------------------------------------------------
     selectedItem: "",
     scaleNumber: 1,
-  
+
   }
 
   buttonPress = (event) => {
@@ -62,8 +64,13 @@ class ListScreen extends Component {
         copyItem.y += 100
         copyItem.key = this.findBiggestKey(copyList)
         copyList.list.push(copyItem)
-        this.setState({ theWireFrame: copyList })
+        this.setSelectedItem(event, copyItem)
 
+        var allSquare = document.getElementsByClassName("square")
+
+        for (var x = 0; x < allSquare.length; x++) {
+          allSquare[x].style.visibility = "hidden"
+        }
       }
     }
   }
@@ -269,6 +276,8 @@ class ListScreen extends Component {
     this.setState({ bordercolor: currentItemSelected.bordercolor })
     this.setState({ borderthickness: parseInt(currentItemSelected.borderthickness) })
     this.setState({ borderradius: parseInt(currentItemSelected.borderradius) })
+
+    document.getElementById("dimensionButton").style.visibility = "hidden"
   }
 
   setItemSelectedEmpty = () => {
@@ -280,11 +289,34 @@ class ListScreen extends Component {
     this.setState({ bordercolor: "" })
     this.setState({ borderthickness: "" })
     this.setState({ borderradius: "" })
-
+   
+    document.getElementById("dimensionButton").style.visibility = "hidden"
     var allSquare = document.getElementsByClassName("square")
 
     for (var x = 0; x < allSquare.length; x++) {
       allSquare[x].style.visibility = "hidden"
+    }
+  }
+
+  chagneDimensions = (event) => {
+
+      this.setState({
+        [event.target.name]: event.target.value
+      })
+
+      document.getElementById("dimensionButton").style.visibility = "visible"
+
+  }
+
+  changeSizes = () =>{
+    var width = parseInt(document.getElementById("theWidth").value)
+    console.log(width)
+    var height = parseInt(document.getElementById("theHeight").value)
+    if(isNaN(width)==false && width >=1 && width<=5000){
+      document.getElementById("cleanDiv").style.width = width+"px"
+    }
+    if(isNaN(height)==false && height >=1 && height<=5000){
+      document.getElementById("cleanDiv").style.height = height+"px"
     }
   }
 
@@ -295,7 +327,7 @@ class ListScreen extends Component {
     if (!auth.uid) {
       return <Redirect to="/" />;
     }
-
+    console.log(this.state.theWireFrame)
     var wireFrameItems = this.state.theWireFrame.list
     const properties = this.state.properties
     const fontsize = this.state.fontsize
@@ -304,6 +336,8 @@ class ListScreen extends Component {
     const borderthickness = this.state.borderthickness
     const borderradius = this.state.borderradius
     const fontcolor = this.state.fontcolor
+    const width = this.state.width
+    const height = this.state.height
     return (
 
 
@@ -387,7 +421,7 @@ class ListScreen extends Component {
             <div className="box" style={{ height: '660px', width: '995px', position: 'relative', overflow: 'auto', padding: '0' }}>
               <div className="boundThis" id="cleanDiv" style={{ height: '2000px', width: '2000px', padding: '10px', overflow: "auto" }} onClick={this.setItemSelectedEmpty}>
                 {wireFrameItems && wireFrameItems.map(wireframe => (
-                  <ItemsList wireFrameItem={wireframe} setSelectedItem={this.setSelectedItem.bind(this)} scaleNumber={this.state.scaleNumber}  />
+                  <ItemsList wireFrameItem={wireframe} setSelectedItem={this.setSelectedItem.bind(this)} scaleNumber={this.state.scaleNumber} />
                 ))}
               </div>
             </div>
@@ -402,6 +436,9 @@ class ListScreen extends Component {
             <h6>Border Color: <input className="textboxy" type="color" id="theBordercolor" name="bordercolor" value={bordercolor} onChange={this.changeItem} /></h6>
             <h6>Border Thickness: <input className="textboxy" type="text" id="theBorderthickness" name="borderthickness" value={borderthickness} onChange={this.changeItem} /></h6>
             <h6>Border Radius: <input className="textboxy" type="text" id="theBorderradius" name="borderradius" value={borderradius} onChange={this.changeItem} /></h6>
+            <h6>Width: <input className="textboxy" type="text" id="theWidth" name="width" value={width} onChange={this.chagneDimensions} /></h6>
+            <h6>Height: <input className="textboxy" type="text" id="theHeight" name="height" value={height} onChange={this.chagneDimensions} /></h6>
+            <button id="dimensionButton" onClick={this.changeSizes}>Click to Dimensions</button>
           </div>
 
 

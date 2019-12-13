@@ -297,20 +297,28 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, textarea.mat
 .tl {
   left: 0;
   top: 0;
+  pointer-events: none;
 }
 
 .tr {
   right: 0;
   top: 0;
+  pointer-events: none;
 }
 
 .bl {
   left: 0;
   bottom: 0;
+  pointer-events: none;
 }
 
 .br {
   right: 0;
   bottom: 0;
+  pointer-events: none;
   
+}
+
+#dimensionButton{
+  visibility: hidden;
 }
