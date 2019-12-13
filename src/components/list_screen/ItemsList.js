@@ -119,6 +119,7 @@ class ItemsList extends React.Component {
                         onDragStop={(e, d) => {
                             this.props.wireFrameItem.x = d.x
                             this.props.wireFrameItem.y = d.y
+                            this.props.saveToFalse()
                         }}
                         scale={this.props.scaleNumber}
                         onResizeStop={(e, direction, ref, delta, position) => {
@@ -126,7 +127,7 @@ class ItemsList extends React.Component {
                             this.props.wireFrameItem.y = position.y
                             this.props.wireFrameItem.width = ref.style.width
                             this.props.wireFrameItem.height = ref.style.height
-
+                            this.props.saveToFalse()
                         }} >
                         <button style={buttonStyle} className="zoom" onClick={this.selected}>{wireFrameItem.text} </button>
                         <div className="tl square"></div>
@@ -145,6 +146,7 @@ class ItemsList extends React.Component {
                         onDragStop={(e, d) => {
                             this.props.wireFrameItem.x = d.x
                             this.props.wireFrameItem.y = d.y
+                            this.props.saveToFalse()
                         }}
                         scale={this.props.scaleNumber}
                         onResizeStop={(e, direction, ref, delta, position) => {
@@ -152,6 +154,7 @@ class ItemsList extends React.Component {
                             this.props.wireFrameItem.y = position.y
                             this.props.wireFrameItem.width = ref.style.width
                             this.props.wireFrameItem.height = ref.style.height
+                            this.props.saveToFalse()
 
                         }} >
                         <label style={labelStyle} onClick={this.selected} >{wireFrameItem.text}</label>
@@ -170,6 +173,7 @@ class ItemsList extends React.Component {
                         onDragStop={(e, d) => {
                             this.props.wireFrameItem.x = d.x
                             this.props.wireFrameItem.y = d.y
+                            this.props.saveToFalse()
                         }}
                         scale={this.props.scaleNumber}
                         onResizeStop={(e, direction, ref, delta, position) => {
@@ -177,6 +181,7 @@ class ItemsList extends React.Component {
                             this.props.wireFrameItem.y = position.y
                             this.props.wireFrameItem.width = ref.style.width
                             this.props.wireFrameItem.height = ref.style.height
+                            this.props.saveToFalse()
 
                         }} >
                         <div style={containerStyle} onClick={this.selected}></div>
@@ -197,7 +202,7 @@ class ItemsList extends React.Component {
                           
                             this.props.wireFrameItem.x = d.x
                             this.props.wireFrameItem.y = d.y
-                         
+                            this.props.saveToFalse()
                         }}
                         scale={this.props.scaleNumber}
                         onResizeStop={(e, direction, ref, delta, position) => {
@@ -206,6 +211,7 @@ class ItemsList extends React.Component {
                             this.props.wireFrameItem.y =position.y
                             this.props.wireFrameItem.width = ref.style.width
                             this.props.wireFrameItem.height = ref.style.height
+                            this.props.saveToFalse()
 
                         }} >
                         <input type="text" style={textFieldStyle} placeholder="input" value={wireFrameItem.text} className="browser-default" id="inputTextBox" onClick={this.selected} />

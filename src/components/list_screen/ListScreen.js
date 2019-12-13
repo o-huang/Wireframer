@@ -45,13 +45,14 @@ class ListScreen extends Component {
 
     if (event.keyCode === 46) {
       event.preventDefault()
+
       var copyList = Object.assign({}, this.state.theWireFrame)
       var index = copyList.list.indexOf(this.state.selectedItem)
       if (index != -1) {
         copyList.list.splice(index, 1)
         this.setState({ theWireFrame: copyList })
         this.setState({ selectedItem: "" })
-
+        this.setState({didISave: false})
       }
     }
 
@@ -65,7 +66,7 @@ class ListScreen extends Component {
         copyItem.key = this.findBiggestKey(copyList)
         copyList.list.push(copyItem)
         this.setSelectedItem(event, copyItem)
-
+        this.setState({didISave: false})
         var allSquare = document.getElementsByClassName("square")
 
         for (var x = 0; x < allSquare.length; x++) {
@@ -132,6 +133,7 @@ class ListScreen extends Component {
     }
     copy.list.push(newContainer)
     this.setState({ theWireFrame: copy })
+    this.setState({didISave: false})
   }
 
   addLabel = () => {
@@ -153,6 +155,7 @@ class ListScreen extends Component {
     }
     copy.list.push(newLabel)
     this.setState({ theWireFrame: copy })
+    this.setState({didISave: false})
   }
 
   addButton = () => {
@@ -174,7 +177,7 @@ class ListScreen extends Component {
     }
     copy.list.push(newButton)
     this.setState({ theWireFrame: copy })
-
+    this.setState({didISave: false})
   }
 
   addTextfield = () => {
@@ -196,6 +199,7 @@ class ListScreen extends Component {
     }
     copy.list.push(newTextfield)
     this.setState({ theWireFrame: copy })
+    this.setState({didISave: false})
   }
 
 
@@ -227,7 +231,7 @@ class ListScreen extends Component {
 
   checkSaved = () => {
     if (this.state.didISave == false) {
-      if (window.confirm("Do you want to save first?")) {
+      if (window.confirm("Save first?")) {
 
       } else {
         this.props.history.push({
@@ -254,6 +258,7 @@ class ListScreen extends Component {
       this.state.selectedItem.bordercolor = document.getElementById("theBordercolor").value
       this.state.selectedItem.borderthickness = document.getElementById("theBorderthickness").value + "px"
       this.state.selectedItem.borderradius = document.getElementById("theBorderradius").value + "px"
+      this.setState({didISave: false})
     }
   }
 
@@ -289,7 +294,7 @@ class ListScreen extends Component {
     this.setState({ bordercolor: "" })
     this.setState({ borderthickness: "" })
     this.setState({ borderradius: "" })
-   
+
     document.getElementById("dimensionButton").style.visibility = "hidden"
     var allSquare = document.getElementsByClassName("square")
 
@@ -300,34 +305,47 @@ class ListScreen extends Component {
 
   chagneDimensions = (event) => {
 
-      this.setState({
-        [event.target.name]: event.target.value
-      })
+    this.setState({
+      [event.target.name]: event.target.value
+    })
 
-      document.getElementById("dimensionButton").style.visibility = "visible"
+    document.getElementById("dimensionButton").style.visibility = "visible"
 
   }
 
-  changeSizes = () =>{
+  changeSizes = () => {
     var width = parseInt(document.getElementById("theWidth").value)
     console.log(width)
     var height = parseInt(document.getElementById("theHeight").value)
-    if(isNaN(width)==false && width >=1 && width<=5000){
-      document.getElementById("cleanDiv").style.width = width+"px"
+    if (isNaN(width) == false && width >= 1 && width <= 5000) {
+      document.getElementById("cleanDiv").style.width = width + "px"
     }
-    if(isNaN(height)==false && height >=1 && height<=5000){
-      document.getElementById("cleanDiv").style.height = height+"px"
+    if (isNaN(height) == false && height >= 1 && height <= 5000) {
+      document.getElementById("cleanDiv").style.height = height + "px"
     }
   }
 
+  saveWireFrame = () => {
 
+    var newList = this.state.theUser.wireFrameList.slice()
+
+    const fireStore = getFirestore();
+    fireStore.collection('users').doc(this.props.auth.uid).update({
+      wireFrameList: newList
+  })
+    this.setState({didISave: true})
+  }
+
+  saveToFalse = ()=>{
+    this.setState({didISave: false})
+  }
   render = () => {
     const auth = this.props.auth;
 
     if (!auth.uid) {
       return <Redirect to="/" />;
     }
-    console.log(this.state.theWireFrame)
+
     var wireFrameItems = this.state.theWireFrame.list
     const properties = this.state.properties
     const fontsize = this.state.fontsize
@@ -373,7 +391,7 @@ class ListScreen extends Component {
                     <i className="material-icons" onClick={this.zoomOut}>zoom_out</i>
                   </div>
                   <div className="col s3">
-                    <i className="material-icons">save</i>
+                    <i className="material-icons" onClick={this.saveWireFrame}>save</i>
                   </div>
                   <div className="col s3">
 
@@ -421,7 +439,7 @@ class ListScreen extends Component {
             <div className="box" style={{ height: '660px', width: '995px', position: 'relative', overflow: 'auto', padding: '0' }}>
               <div className="boundThis" id="cleanDiv" style={{ height: '2000px', width: '2000px', padding: '10px', overflow: "auto" }} onClick={this.setItemSelectedEmpty}>
                 {wireFrameItems && wireFrameItems.map(wireframe => (
-                  <ItemsList wireFrameItem={wireframe} setSelectedItem={this.setSelectedItem.bind(this)} scaleNumber={this.state.scaleNumber} />
+                  <ItemsList wireFrameItem={wireframe} setSelectedItem={this.setSelectedItem.bind(this)} scaleNumber={this.state.scaleNumber} saveToFalse={this.saveToFalse.bind(this)}/>
                 ))}
               </div>
             </div>
