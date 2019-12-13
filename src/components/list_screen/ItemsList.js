@@ -12,6 +12,7 @@ import { Resizable } from "re-resizable";
 import { Rnd } from "react-rnd";
 
 import interact from 'interactjs'
+import { transform } from '@babel/core';
 class ItemsList extends React.Component {
 
     constructor(props) {
@@ -25,6 +26,8 @@ class ItemsList extends React.Component {
             height: this.props.wireFrameItem.height,
 
 
+
+
         }
     }
 
@@ -35,16 +38,23 @@ class ItemsList extends React.Component {
     selected = (event) => {
         const { wireFrameItem } = this.props;
         this.props.setSelectedItem(event, wireFrameItem)
-        // console.log(event.target.parentElement)
-        // var btn = document.createElement("BUTTON")
-        // btn.innerHTML= "hi"
-        // event.target.parentElement.appendChild(btn)
 
+        var allSquare = document.getElementsByClassName("square")
+
+        for (var x = 0; x < allSquare.length; x++) {
+            allSquare[x].style.visibility = "hidden"
+        }
+
+        for (var x = 0; x < event.target.parentElement.childNodes.length; x++) {
+            console.log(event.target.parentElement.childNodes[x].style.visibility)
+            if (event.target.parentElement.childNodes[x].className.includes("square")) {
+                event.target.parentElement.childNodes[x].style.visibility = "visible"
+            }
+        }
     }
 
     render() {
         const { wireFrameItem } = this.props;
-        // console.log(wireFrameItem)
 
         const buttonStyle = {
             fontSize: wireFrameItem.fontsize,
@@ -101,104 +111,139 @@ class ItemsList extends React.Component {
             justifyContent: "center",
             border: "solid 1px #ddd",
             background: "#f0f0f0",
-            width: "100px"
-        
-            
+
+
+
         };
+
+        const zoomstyle = {
+            left: this.state.x,
+            top: this.state.y,
+            width: this.state.width,
+            height: this.state.height
+        }
         let thing = ""
         if (wireFrameItem.type == "button") {
             thing = (
-                <Rnd style={style} id="helloworld" size={{ width: this.state.width, height: this.state.height }}
-                    position={{ x: this.state.x, y: this.state.y }}
-                    onDragStop={(e, d) => {
-                        this.props.wireFrameItem.x = d.x
-                        this.props.wireFrameItem.y = d.y
-                        this.setState({ x: d.x, y: d.y })
-                    }}
-                    onResizeStop={(e, direction, ref, delta, position) => {
+                <div className="zoom" style={{ transform: "scale(" + this.props.scaleNumber + ")" }}>
+                    <Rnd style={style} id="helloworld" size={{ width: this.state.width, height: this.state.height }}
+                        position={{ x: this.state.x, y: this.state.y }}
+                        onDragStop={(e, d) => {
+                            this.props.wireFrameItem.x = d.x
+                            this.props.wireFrameItem.y = d.y
+                            this.setState({ x: d.x, y: d.y })
+                        }}
+                        scale={this.props.scaleNumber}
+                        onResizeStop={(e, direction, ref, delta, position) => {
 
-                        this.props.wireFrameItem.width = ref.style.width
-                        this.props.wireFrameItem.height = ref.style.height
-                        this.setState({
+                            this.props.wireFrameItem.width = ref.style.width
+                            this.props.wireFrameItem.height = ref.style.height
+                            this.setState({
 
-                            width: ref.style.width,
-                            height: ref.style.height,
-                            ...position,
-                        });
-                    }} >
-                    <button style={buttonStyle} className="zoom" onClick={this.selected}>{wireFrameItem.text} </button>
-                </Rnd>
+                                width: ref.style.width,
+                                height: ref.style.height,
+                                ...position,
+                            });
+                        }} >
+                        <button style={buttonStyle} className="zoom" onClick={this.selected}>{wireFrameItem.text} </button>
+                        <div className="tl square"></div>
+                        <div className="tr square"></div>
+                        <div className="bl square"></div>
+                        <div className="br square"></div>
+                    </Rnd>
+                </div>
             )
         }
         else if (wireFrameItem.type == "label") {
             thing = (
-                <Rnd style={style} size={{ width: this.state.width, height: this.state.height }}
-                    position={{ x: this.state.x, y: this.state.y }}
-                    onDragStop={(e, d) => {
-                        this.props.wireFrameItem.x = d.x
-                        this.props.wireFrameItem.y = d.y
-                        this.setState({ x: d.x, y: d.y })
-                    }}
-            
-                    onResizeStop={(e, direction, ref, delta, position) => {
+                <div className="zoom" style={{ transform: "scale(" + this.props.scaleNumber + ")" }}>
+                    <Rnd style={style} size={{ width: this.state.width, height: this.state.height }}
+                        position={{ x: this.state.x, y: this.state.y }}
+                        onDragStop={(e, d) => {
+                            this.props.wireFrameItem.x = d.x
+                            this.props.wireFrameItem.y = d.y
+                            this.setState({ x: d.x, y: d.y })
+                        }}
 
-                        this.props.wireFrameItem.width = ref.style.width
-                        this.props.wireFrameItem.height = ref.style.height
-                        this.setState({
+                        scale={this.props.scaleNumber}
+                        onResizeStop={(e, direction, ref, delta, position) => {
 
-                            width: ref.style.width,
-                            height: ref.style.height,
-                            ...position,
-                        });
-                    }}>
-                    <label style={labelStyle} onClick={this.selected} >{wireFrameItem.text}</label>
-                </Rnd>
+                            this.props.wireFrameItem.width = ref.style.width
+                            this.props.wireFrameItem.height = ref.style.height
+                            this.setState({
+
+                                width: ref.style.width,
+                                height: ref.style.height,
+                                ...position,
+                            });
+                        }}>
+                        <label style={labelStyle} onClick={this.selected} >{wireFrameItem.text}</label>
+                        <div className="tl square"></div>
+                        <div className="tr square"></div>
+                        <div className="bl square"></div>
+                        <div className="br square"></div>
+                    </Rnd>
+                </div>
             )
         } else if (wireFrameItem.type == "container") {
             thing = (
-                <Rnd style={style} size={{ width: this.state.width, height: this.state.height }}
-                    position={{ x: this.state.x, y: this.state.y }}
-                    onDragStop={(e, d) => {
-                        this.props.wireFrameItem.x = d.x
-                        this.props.wireFrameItem.y = d.y
-                        this.setState({ x: d.x, y: d.y })
-                    }}
-                    onResizeStop={(e, direction, ref, delta, position) => {
+                <div className="zoom" style={{ transform: "scale(" + this.props.scaleNumber + ")" }}>
+                    <Rnd style={style} size={{ width: this.state.width, height: this.state.height }}
+                        position={{ x: this.state.x, y: this.state.y }}
+                        onDragStop={(e, d) => {
+                            this.props.wireFrameItem.x = d.x
+                            this.props.wireFrameItem.y = d.y
+                            this.setState({ x: d.x, y: d.y })
+                        }}
+                        scale={this.props.scaleNumber}
+                        onResizeStop={(e, direction, ref, delta, position) => {
 
-                        this.props.wireFrameItem.width = ref.style.width
-                        this.props.wireFrameItem.height = ref.style.height
-                        this.setState({
+                            this.props.wireFrameItem.width = ref.style.width
+                            this.props.wireFrameItem.height = ref.style.height
+                            this.setState({
 
-                            width: ref.style.width,
-                            height: ref.style.height,
-                            ...position,
-                        });
-                    }}>
-                    <div style={containerStyle}  onClick={this.selected}></div>
-                </Rnd>
+                                width: ref.style.width,
+                                height: ref.style.height,
+                                ...position,
+                            });
+                        }}>
+                        <div style={containerStyle} onClick={this.selected}></div>
+                        <div className="tl square"></div>
+                        <div className="tr square"></div>
+                        <div className="bl square"></div>
+                        <div className="br square"></div>
+                    </Rnd>
+                </div>
             )
         } else {
             thing = (
-                <Rnd style={style} size={{ width: this.state.width, height: this.state.height }}
-                    position={{ x: this.state.x, y: this.state.y }}
-                    onDragStop={(e, d) => {
-                        this.props.wireFrameItem.x = d.x
-                        this.props.wireFrameItem.y = d.y
-                        this.setState({ x: d.x, y: d.y })
-                    }}
-                    onResizeStop={(e, direction, ref, delta, position) => {
+                <div className="zoom" style={{ transform: "scale(" + this.props.scaleNumber + ")" }}>
+                    <Rnd style={style} size={{ width: this.state.width, height: this.state.height }}
+                        position={{ x: this.state.x, y: this.state.y }}
+                        onDragStop={(e, d) => {
+                            this.props.wireFrameItem.x = d.x
+                            this.props.wireFrameItem.y = d.y
+                            this.setState({ x: d.x, y: d.y })
+                        }}
+                        scale={this.props.scaleNumber}
+                        onResizeStop={(e, direction, ref, delta, position) => {
 
-                        this.props.wireFrameItem.width = ref.style.width
-                        this.props.wireFrameItem.height = ref.style.height
-                        this.setState({
+                            this.props.wireFrameItem.width = ref.style.width
+                            this.props.wireFrameItem.height = ref.style.height
+                            this.setState({
 
-                            width: ref.style.width,
-                            height: ref.style.height,
-                            ...position,
-                        });
-                    }}>
-                    <input type="text" style={textFieldStyle} placeholder="input" value={wireFrameItem.text} className="browser-default" id="inputTextBox" onClick={this.selected} />
-                </Rnd>
+                                width: ref.style.width,
+                                height: ref.style.height,
+                                ...position,
+                            });
+                        }}>
+                        <input type="text" style={textFieldStyle} placeholder="input" value={wireFrameItem.text} className="browser-default" id="inputTextBox" onClick={this.selected} />
+                        <div className="tl square"></div>
+                        <div className="tr square"></div>
+                        <div className="bl square"></div>
+                        <div className="br square"></div>
+                    </Rnd>
+                </div>
             )
         }
         return (

@@ -34,7 +34,9 @@ class ListScreen extends Component {
     borderthickness: "",
     borderradius: "",
     //-------------------------------------------------------------
-    selectedItem: ""
+    selectedItem: "",
+    scaleNumber: 1,
+  
   }
 
   buttonPress = (event) => {
@@ -60,8 +62,8 @@ class ListScreen extends Component {
         copyItem.y += 100
         copyItem.key = this.findBiggestKey(copyList)
         copyList.list.push(copyItem)
-        this.setState({theWireFrame: copyList})
-    
+        this.setState({ theWireFrame: copyList })
+
       }
     }
   }
@@ -192,46 +194,28 @@ class ListScreen extends Component {
 
 
   zoomIn = () => {
-    var cols = document.getElementsByClassName("zoom")
 
-    for (var i = 0; i < cols.length; i++) {
-      if (cols[i].style.transform == "") {
-        cols[i].style.transform = "scale(2)"
-      }
-      else {
-        var firstPar = cols[i].style.transform.indexOf("(")
-        var secondPar = cols[i].style.transform.indexOf(")")
-        firstPar += 1
-        var theNumber = cols[i].style.transform.substring(firstPar, secondPar)
-        var theNumber = parseFloat(theNumber)
-        if (theNumber * 2 < 10) {
-          theNumber = theNumber * 2
-          var theString = "scale(" + theNumber + ")"
-          cols[i].style.transform = theString
-        }
-      }
+    var number = this.state.scaleNumber
+    if (number * 2 < 8) {
+
+      number = number * 2
+
+      this.setState({ scaleNumber: number })
+      this.setState({ xpos: 20 })
+      this.setState({ ypos: 20 })
     }
   }
 
   zoomOut = () => {
-    var cols = document.getElementsByClassName("zoom")
-    for (var i = 0; i < cols.length; i++) {
-      if (cols[i].style.transform == "") {
-        cols[i].style.transform = "scale(.5)"
-      }
-      else {
-        var firstPar = cols[i].style.transform.indexOf("(")
-        var secondPar = cols[i].style.transform.indexOf(")")
-        firstPar += 1
-        var theNumber = cols[i].style.transform.substring(firstPar, secondPar)
-        var theNumber = parseFloat(theNumber)
-        if (theNumber / 2 > .2) {
-          theNumber = theNumber / 2
-          var theString = "scale(" + theNumber + ")"
-          cols[i].style.transform = theString
-        }
-      }
+    var number = this.state.scaleNumber
+    if (number / 2 > 0) {
+
+      number = number / 2
+
+      this.setState({ scaleNumber: number })
+
     }
+
   }
 
   checkSaved = () => {
@@ -296,6 +280,12 @@ class ListScreen extends Component {
     this.setState({ bordercolor: "" })
     this.setState({ borderthickness: "" })
     this.setState({ borderradius: "" })
+
+    var allSquare = document.getElementsByClassName("square")
+
+    for (var x = 0; x < allSquare.length; x++) {
+      allSquare[x].style.visibility = "hidden"
+    }
   }
 
 
@@ -397,7 +387,7 @@ class ListScreen extends Component {
             <div className="box" style={{ height: '660px', width: '995px', position: 'relative', overflow: 'auto', padding: '0' }}>
               <div className="boundThis" id="cleanDiv" style={{ height: '2000px', width: '2000px', padding: '10px', overflow: "auto" }} onClick={this.setItemSelectedEmpty}>
                 {wireFrameItems && wireFrameItems.map(wireframe => (
-                  <ItemsList wireFrameItem={wireframe} setSelectedItem={this.setSelectedItem.bind(this)} />
+                  <ItemsList wireFrameItem={wireframe} setSelectedItem={this.setSelectedItem.bind(this)} scaleNumber={this.state.scaleNumber}  />
                 ))}
               </div>
             </div>
