@@ -42,7 +42,6 @@ class LoginScreen extends Component {
     if (auth.uid) {
       return <Redirect to="/" />;
     }
-
     return (
       <div className="container">
         <div className="row">
@@ -58,7 +57,8 @@ class LoginScreen extends Component {
             </div>
             <div className="input-field">
               <button type="submit" className="btn pink lighten-1 z-depth-0">Login</button>
-              {authError ? <div className="red-text center"><p>{authError}</p></div> : null}
+         
+              {authError =='Login fail'? <div className="red-text center"><p>{authError}</p></div> : null}
             </div>
           </form>
 
