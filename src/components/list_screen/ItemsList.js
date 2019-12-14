@@ -34,24 +34,35 @@ class ItemsList extends React.Component {
 
     selected = (event) => {
         const { wireFrameItem } = this.props;
-        this.props.setSelectedItem(event, wireFrameItem)
       
-        var allSquare = document.getElementsByClassName("square")
+        this.props.setSelectedItem(event, wireFrameItem)
 
-        for (var x = 0; x < allSquare.length; x++) {
-            allSquare[x].style.visibility = "hidden"
-        }
+        // var allSquare = document.getElementsByClassName("square")
 
-        for (var x = 0; x < event.target.parentElement.childNodes.length; x++) {
-            if (event.target.parentElement.childNodes[x].className.includes("square")) {
-                event.target.parentElement.childNodes[x].style.visibility = "visible"
-            }
+        // for (var x = 0; x < allSquare.length; x++) {
+        //     allSquare[x].style.visibility = "hidden"
+        // }
+
+        // for (var x = 0; x < event.target.parentElement.childNodes.length; x++) {
+        //     if (event.target.parentElement.childNodes[x].className.includes("square")) {
+        //         event.target.parentElement.childNodes[x].style.visibility = "visible"
+        //     }
+        // }
+        for (var x = 0; x < this.props.wireFrame.list.length; x++) {
+
+            this.props.wireFrame.list[x].square = 0
         }
+        console.log(wireFrameItem)
+        wireFrameItem.square = 1
+    }
+
+    checkSquare = () => {
+
     }
 
     render() {
         const { wireFrameItem } = this.props;
-     
+
 
         const buttonStyle = {
             fontSize: wireFrameItem.fontsize,
@@ -123,6 +134,7 @@ class ItemsList extends React.Component {
                         }}
                         scale={this.props.scaleNumber}
                         onResizeStop={(e, direction, ref, delta, position) => {
+                            console.log(this.props.wireFrameItem.square)
                             this.props.wireFrameItem.x = position.x
                             this.props.wireFrameItem.y = position.y
                             this.props.wireFrameItem.width = ref.style.width
@@ -130,10 +142,11 @@ class ItemsList extends React.Component {
                             this.props.saveToFalse()
                         }} >
                         <button style={buttonStyle} className="zoom" onClick={this.selected}>{wireFrameItem.text} </button>
-                        <div className="tl square"></div>
-                        <div className="tr square"></div>
-                        <div className="bl square"></div>
-                        <div className="br square"></div>
+
+                        <div className={this.props.wireFrameItem.square == 0 ? "tl square" : "tl squareVisiable"}></div>
+                        <div className={this.props.wireFrameItem.square == 0 ? "tr square" : "tr squareVisiable"}></div>
+                        <div className={this.props.wireFrameItem.square == 0 ? "bl square" : "bl squareVisiable"}></div>
+                        <div className={this.props.wireFrameItem.square == 0 ? "br square" : "br squareVisiable"}></div>
                     </Rnd>
                 </div>
             )
@@ -158,10 +171,10 @@ class ItemsList extends React.Component {
 
                         }} >
                         <label style={labelStyle} onClick={this.selected} >{wireFrameItem.text}</label>
-                        <div className="tl square"></div>
-                        <div className="tr square"></div>
-                        <div className="bl square"></div>
-                        <div className="br square"></div>
+                        <div className={this.props.wireFrameItem.square == 0 ? "tl square" : "tl squareVisiable"}></div>
+                        <div className={this.props.wireFrameItem.square == 0 ? "tr square" : "tr squareVisiable"}></div>
+                        <div className={this.props.wireFrameItem.square == 0 ? "bl square" : "bl squareVisiable"}></div>
+                        <div className={this.props.wireFrameItem.square == 0 ? "br square" : "br squareVisiable"}></div>
                     </Rnd>
                 </div>
             )
@@ -185,10 +198,10 @@ class ItemsList extends React.Component {
 
                         }} >
                         <div style={containerStyle} onClick={this.selected}></div>
-                        <div className="tl square"></div>
-                        <div className="tr square"></div>
-                        <div className="bl square"></div>
-                        <div className="br square"></div>
+                        <div className={this.props.wireFrameItem.square == 0 ? "tl square" : "tl squareVisiable"}></div>
+                        <div className={this.props.wireFrameItem.square == 0 ? "tr square" : "tr squareVisiable"}></div>
+                        <div className={this.props.wireFrameItem.square == 0 ? "bl square" : "bl squareVisiable"}></div>
+                        <div className={this.props.wireFrameItem.square == 0 ? "br square" : "br squareVisiable"}></div>
                     </Rnd>
                 </div>
             )
@@ -198,27 +211,27 @@ class ItemsList extends React.Component {
                     <Rnd style={style} size={{ width: this.props.wireFrameItem.width, height: this.props.wireFrameItem.height }}
                         position={{ x: this.props.wireFrameItem.x, y: this.props.wireFrameItem.y }}
                         onDragStop={(e, d) => {
-                         
-                          
+
+
                             this.props.wireFrameItem.x = d.x
                             this.props.wireFrameItem.y = d.y
                             this.props.saveToFalse()
                         }}
                         scale={this.props.scaleNumber}
                         onResizeStop={(e, direction, ref, delta, position) => {
-                            
-                            this.props.wireFrameItem.x =position.x
-                            this.props.wireFrameItem.y =position.y
+
+                            this.props.wireFrameItem.x = position.x
+                            this.props.wireFrameItem.y = position.y
                             this.props.wireFrameItem.width = ref.style.width
                             this.props.wireFrameItem.height = ref.style.height
                             this.props.saveToFalse()
 
                         }} >
                         <input type="text" style={textFieldStyle} placeholder="input" value={wireFrameItem.text} className="browser-default" id="inputTextBox" onClick={this.selected} />
-                        <div className="tl square"></div>
-                        <div className="tr square"></div>
-                        <div className="bl square"></div>
-                        <div className="br square"></div>
+                        <div className={this.props.wireFrameItem.square == 0 ? "tl square" : "tl squareVisiable"}></div>
+                        <div className={this.props.wireFrameItem.square == 0 ? "tr square" : "tr squareVisiable"}></div>
+                        <div className={this.props.wireFrameItem.square == 0 ? "bl square" : "bl squareVisiable"}></div>
+                        <div className={this.props.wireFrameItem.square == 0 ? "br square" : "br squareVisiable"}></div>
                     </Rnd>
                 </div>
             )

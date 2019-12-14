@@ -61,17 +61,15 @@ class ListScreen extends Component {
       if (this.state.selectedItem != "") {
         var copyList = Object.assign({}, this.state.theWireFrame)
         var copyItem = Object.assign({}, this.state.selectedItem)
+        this.state.selectedItem.square = 0
         copyItem.x += 100
         copyItem.y += 100
+        copyItem.square = 1
         copyItem.key = this.findBiggestKey(copyList)
         copyList.list.push(copyItem)
         this.setSelectedItem(event, copyItem)
         this.setState({didISave: false})
-        var allSquare = document.getElementsByClassName("square")
-
-        for (var x = 0; x < allSquare.length; x++) {
-          allSquare[x].style.visibility = "hidden"
-        }
+    
       }
     }
   }
@@ -129,7 +127,8 @@ class ListScreen extends Component {
       x: "10",
       y: "10",
       width: "300px",
-      height: "300px"
+      height: "300px",
+      square: 0
     }
     copy.list.push(newContainer)
     this.setState({ theWireFrame: copy })
@@ -151,7 +150,8 @@ class ListScreen extends Component {
       x: "10",
       y: "10",
       width: "140px",
-      height: "30px"
+      height: "30px",
+      square: 0
     }
     copy.list.push(newLabel)
     this.setState({ theWireFrame: copy })
@@ -173,7 +173,8 @@ class ListScreen extends Component {
       x: "10",
       y: "10",
       width: "100px",
-      height: "50px"
+      height: "50px",
+      square: 0
     }
     copy.list.push(newButton)
     this.setState({ theWireFrame: copy })
@@ -195,7 +196,8 @@ class ListScreen extends Component {
       x: "10",
       y: "10",
       width: "200px",
-      height: "75px"
+      height: "75px",
+      square: 0
     }
     copy.list.push(newTextfield)
     this.setState({ theWireFrame: copy })
@@ -230,6 +232,9 @@ class ListScreen extends Component {
   }
 
   checkSaved = () => {
+    console.log()
+   
+ 
     if (this.state.didISave == false) {
       if (window.confirm("Save first?")) {
 
@@ -295,12 +300,11 @@ class ListScreen extends Component {
     this.setState({ borderthickness: "" })
     this.setState({ borderradius: "" })
 
-    document.getElementById("dimensionButton").style.visibility = "hidden"
-    var allSquare = document.getElementsByClassName("square")
-
-    for (var x = 0; x < allSquare.length; x++) {
-      allSquare[x].style.visibility = "hidden"
+    for(var x =0; x< this.state.theWireFrame.list.length; x++){
+     
+      this.state.theWireFrame.list[x].square = 0
     }
+ 
   }
 
   chagneDimensions = (event) => {
@@ -326,6 +330,11 @@ class ListScreen extends Component {
   }
 
   saveWireFrame = () => {
+    for(var x =0; x< this.state.theWireFrame.list.length; x++){
+     
+      this.state.theWireFrame.list[x].square = 0
+      
+    }
 
     var newList = this.state.theUser.wireFrameList.slice()
 
@@ -339,6 +348,9 @@ class ListScreen extends Component {
   saveToFalse = ()=>{
     this.setState({didISave: false})
   }
+
+
+
   render = () => {
     const auth = this.props.auth;
 
@@ -439,7 +451,7 @@ class ListScreen extends Component {
             <div className="box" style={{ height: '660px', width: '995px', position: 'relative', overflow: 'auto', padding: '0' }}>
               <div className="boundThis" id="cleanDiv" style={{ height: '2000px', width: '2000px', padding: '10px', overflow: "auto" }} onClick={this.setItemSelectedEmpty}>
                 {wireFrameItems && wireFrameItems.map(wireframe => (
-                  <ItemsList wireFrameItem={wireframe} setSelectedItem={this.setSelectedItem.bind(this)} scaleNumber={this.state.scaleNumber} saveToFalse={this.saveToFalse.bind(this)}/>
+                  <ItemsList wireFrameItem={wireframe} wireFrame={this.state.theWireFrame}setSelectedItem={this.setSelectedItem.bind(this)} scaleNumber={this.state.scaleNumber} saveToFalse={this.saveToFalse.bind(this)}/>
                 ))}
               </div>
             </div>
@@ -458,8 +470,6 @@ class ListScreen extends Component {
             <h6>Height: <input className="textboxy" type="text" id="theHeight" name="height" value={height} onChange={this.chagneDimensions} /></h6>
             <button id="dimensionButton" onClick={this.changeSizes}>Click to Dimensions</button>
           </div>
-
-
         </div>
       </div>
     );
