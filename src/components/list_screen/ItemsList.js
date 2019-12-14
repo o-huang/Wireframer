@@ -36,29 +36,13 @@ class ItemsList extends React.Component {
         const { wireFrameItem } = this.props;
       
         this.props.setSelectedItem(event, wireFrameItem)
-
-        // var allSquare = document.getElementsByClassName("square")
-
-        // for (var x = 0; x < allSquare.length; x++) {
-        //     allSquare[x].style.visibility = "hidden"
-        // }
-
-        // for (var x = 0; x < event.target.parentElement.childNodes.length; x++) {
-        //     if (event.target.parentElement.childNodes[x].className.includes("square")) {
-        //         event.target.parentElement.childNodes[x].style.visibility = "visible"
-        //     }
-        // }
         for (var x = 0; x < this.props.wireFrame.list.length; x++) {
 
             this.props.wireFrame.list[x].square = 0
         }
-        console.log(wireFrameItem)
         wireFrameItem.square = 1
     }
 
-    checkSquare = () => {
-
-    }
 
     render() {
         const { wireFrameItem } = this.props;
@@ -132,6 +116,7 @@ class ItemsList extends React.Component {
                             this.props.wireFrameItem.y = d.y
                             this.props.saveToFalse()
                         }}
+                        enableResizing={ {top:false, right:false, bottom:false, left:false, topRight:true, bottomRight:true, bottomLeft:true, topLeft:true }}
                         scale={this.props.scaleNumber}
                         onResizeStop={(e, direction, ref, delta, position) => {
                             console.log(this.props.wireFrameItem.square)
@@ -141,7 +126,7 @@ class ItemsList extends React.Component {
                             this.props.wireFrameItem.height = ref.style.height
                             this.props.saveToFalse()
                         }} >
-                        <button style={buttonStyle} className="zoom" onClick={this.selected}>{wireFrameItem.text} </button>
+                        <button style={buttonStyle} className="zoom" onClick={this.selected} >{wireFrameItem.text} </button>
 
                         <div className={this.props.wireFrameItem.square == 0 ? "tl square" : "tl squareVisiable"}></div>
                         <div className={this.props.wireFrameItem.square == 0 ? "tr square" : "tr squareVisiable"}></div>
@@ -161,6 +146,7 @@ class ItemsList extends React.Component {
                             this.props.wireFrameItem.y = d.y
                             this.props.saveToFalse()
                         }}
+                        enableResizing={ {top:false, right:false, bottom:false, left:false, topRight:true, bottomRight:true, bottomLeft:true, topLeft:true }}
                         scale={this.props.scaleNumber}
                         onResizeStop={(e, direction, ref, delta, position) => {
                             this.props.wireFrameItem.x = position.x
@@ -188,6 +174,7 @@ class ItemsList extends React.Component {
                             this.props.wireFrameItem.y = d.y
                             this.props.saveToFalse()
                         }}
+                        enableResizing={ {top:false, right:false, bottom:false, left:false, topRight:true, bottomRight:true, bottomLeft:true, topLeft:true }}
                         scale={this.props.scaleNumber}
                         onResizeStop={(e, direction, ref, delta, position) => {
                             this.props.wireFrameItem.x = position.x
@@ -217,6 +204,7 @@ class ItemsList extends React.Component {
                             this.props.wireFrameItem.y = d.y
                             this.props.saveToFalse()
                         }}
+                        enableResizing={ {top:false, right:false, bottom:false, left:false, topRight:true, bottomRight:true, bottomLeft:true, topLeft:true }}
                         scale={this.props.scaleNumber}
                         onResizeStop={(e, direction, ref, delta, position) => {
 
