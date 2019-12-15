@@ -29,7 +29,7 @@ class Navbar extends React.Component {
         <div className="container">
           <Link to="/" className="brand-logo">Wireframe!</Link>
           {links}
-          <Route render={({ history}) => (<button className={ theUser.admin == "yes"?"gotodatabase":"hidegotodatabase"}  onClick={() => { history.push('/databaseTester') }}>Database</button>   )} />
+          
         </div>
       </nav>
     );

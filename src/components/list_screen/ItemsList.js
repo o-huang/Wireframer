@@ -125,6 +125,7 @@ class ItemsList extends React.Component {
                             this.props.wireFrameItem.width = ref.style.width
                             this.props.wireFrameItem.height = ref.style.height
                             this.props.saveToFalse()
+                          
                         }} >
                         <button style={buttonStyle} className="zoom" onClick={this.selected} >{wireFrameItem.text} </button>
 

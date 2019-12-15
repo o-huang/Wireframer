@@ -12,6 +12,7 @@ import Draggable from 'react-draggable';
 import { classPrivateMethod } from '@babel/types';
 
 var theUser = ""
+var listy=""
 var zoomDefaultSize = 1
 class ListScreen extends Component {
 
@@ -26,6 +27,7 @@ class ListScreen extends Component {
     theWireFrame: this.props.location.state.theWireFrame,
     didISave: false,
     //-------------------------------------------------------------
+    name: this.props.location.state.theWireFrame.name,
     properties: "",
     fontsize: "",
     fontcolor: "",
@@ -84,24 +86,14 @@ class ListScreen extends Component {
 
   handleChange = (event) => {
     const { target } = event;
-    this.setState(state => ({
-      ...state,
-      [target.id]: target.value,
-    }));
-
-    var copyList = ""
-    copyList = this.state.theUser.wireFrameList
-
-    for (var x = 0; x < copyList.length; x++) {
-      if (copyList[x].key == this.state.theWireFrame.key) {
-        copyList[x].name = target.value
-      }
-    }
-
-    const fireStore = getFirestore();
-    fireStore.collection('users').doc(this.props.auth.uid).update({
-      wireFrameList: copyList
+    this.setState({
+      [event.target.name]: event.target.value
     })
+    
+    var copyList = Object.assign({}, this.state.theWireFrame)
+    copyList.name = target.value
+    this.setState({theWireFrame: copyList})
+ 
   }
 
   findBiggestKey = (copy) => {
@@ -131,6 +123,7 @@ class ListScreen extends Component {
       square: 0
     }
     copy.list.push(newContainer)
+    
     this.setState({ theWireFrame: copy })
     this.setState({didISave: false})
   }
@@ -335,12 +328,29 @@ class ListScreen extends Component {
       this.state.theWireFrame.list[x].square = 0
       
     }
+    console.log("hi")
+    console.log(this.state.theWireFrame)
+    console.log(this.state.theUser.wireFrameList)
+    console.log("bye")
+   
+    const users = this.props.users
+    for (var x in users) {
+        if (users[x].id == this.props.auth.uid) {
+            listy = users[x]
+        }
+    }
 
-    var newList = this.state.theUser.wireFrameList.slice()
-
+    var wireFrameArrayCopy = listy.wireFrameList
+    for(var x =0; x<wireFrameArrayCopy.length; x++){
+      if(wireFrameArrayCopy[x].key == this.state.theWireFrame.key){
+          wireFrameArrayCopy[x]= this.state.theWireFrame
+      }
+    }
+ 
+    
     const fireStore = getFirestore();
     fireStore.collection('users').doc(this.props.auth.uid).update({
-      wireFrameList: newList
+      wireFrameList: wireFrameArrayCopy
   })
     this.setState({didISave: true})
   }
@@ -368,6 +378,7 @@ class ListScreen extends Component {
     const fontcolor = this.state.fontcolor
     const width = this.state.width
     const height = this.state.height
+    const name = this.state.name
     return (
 
 
@@ -381,7 +392,7 @@ class ListScreen extends Component {
             <label className="nameAndPassword">Wireframe Name:</label>
           </div>
           <div className="col s9">
-            <input type="text" name="name" id="name" onChange={this.handleChange} value={this.state.theWireFrame.name} />
+            <input type="text" name="name" id="name" onChange={this.handleChange} value={name} />
           </div>
         </div>
 

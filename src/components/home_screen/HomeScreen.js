@@ -5,7 +5,7 @@ import { NavLink, Redirect } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
 import TodoListLinks from './TodoListLinks'
 import { getFirestore } from 'redux-firestore';
-
+import { Route } from 'react-router-dom'
 const location = {
     pathname: '/somewhere',
     state: { fromDashboard: true }
@@ -70,6 +70,7 @@ class HomeScreen extends Component {
 
         return (
             <div className="dashboard container">
+                <Route render={({ history}) => (<button id="databasebutton" className={ theUser.admin == "yes"?"gotodatabase":"hidegotodatabase"}  onClick={() => { history.push('/databaseTester') }}>Database</button>   )} />
                 <div className="row">
                     <div className="col s12 m4" id="theLists">
                         <TodoListLinks />
